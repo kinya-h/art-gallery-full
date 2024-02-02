@@ -15,7 +15,6 @@ import ProductDetails from "./pages/ProductDetails";
 import About from "./pages/About";
 import Contacts from "./pages/Contacts";
 import AdminPage from "./pages/AdminPage";
-import { useEffect } from "react";
 
 const router = createBrowserRouter(
   createRoutesFromElements(

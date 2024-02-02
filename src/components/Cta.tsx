@@ -1,4 +1,4 @@
-import React from "react";
+import { Link } from "react-router-dom";
 
 const Cta = () => (
   <div className="flex justify-center mt-10">
@@ -10,9 +10,11 @@ const Cta = () => (
         Immerse yourself in a world of digital art. Explore unique pieces that
         speak to your soul and redefine the way you experience creativity.
       </p>
-      <button className="btn btn-secondary hover:text-white py-2 px-6 rounded-full font-semibold transition-all duration-300">
-        Explore Now
-      </button>
+      <Link to="/home">
+        <button className="btn btn-secondary hover:text-white py-2 px-6 rounded-full font-semibold transition-all duration-300">
+          Explore Now
+        </button>
+      </Link>
     </div>
   </div>
 );

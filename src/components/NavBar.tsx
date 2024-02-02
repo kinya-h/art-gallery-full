@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { divider } from "../assets";
+import { divider,logo } from "../assets";
 import { Link } from "react-router-dom";
 import { RiMenuLine } from "react-icons/ri";
 import { BiChevronDown, BiChevronUp } from "react-icons/bi";
@@ -39,12 +39,11 @@ const NavBar = () => {
       <nav className="w-full fixed z-50 top-0  border-gray-200 mb-20">
         <div className="max-w-screen-xl flex flex-wrap items-center overflow-z-0 justify-between mx-auto p-4">
           <Link to="/" className="flex items-center">
-            {/* <img
+            <img
               src={logo}
               className="absolute h-16 w-16 mr-3"
               alt="Artbid Connect"
-            /> */}
-            <h4>Logo </h4>
+            />
             <span className="self-center md:ml-28 xs:ml-20 md:text-2xl xs:text-1xl xs:text-sm  font-semibold whitespace-nowrap text-white">
               Artbid connect
             </span>
