@@ -1,5 +1,5 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { signIn, signUpUser } from "../../actions/userActions";
+import { getUser, signIn, signUpUser } from "../../actions/userActions";
 import { Token } from "../../types/Token";
 import { User } from "../../types/User";
 
@@ -21,7 +21,7 @@ interface RegisterState {
 interface UserDetailsState {
   user: User;
   loading: boolean;
-  error: string | null;
+  error: string | unknown;
 }
 
 interface UsersState {
@@ -168,25 +168,27 @@ export const registerSlice = createSlice({
   },
 });
 
-const userDetailsSlice = createSlice({
+export const userDetailsSlice = createSlice({
   name: "userDetails",
   initialState: {
     user: {},
     loading: false,
-    error: null,
+    error: "",
   } as UserDetailsState,
-  reducers: {
-    userDetailsRequest: (state) => {
-      state.loading = true;
-    },
-    userDetailsSuccess: (state, action: PayloadAction<User>) => {
-      state.loading = false;
-      state.user = action.payload;
-    },
-    userDetailsFail: (state, action: PayloadAction<string>) => {
-      state.loading = false;
-      state.error = action.payload;
-    },
+  reducers: {},
+  extraReducers: (builder) => {
+    builder
+      .addCase(getUser.pending, (state) => {
+        state.loading = true;
+      })
+      .addCase(getUser.fulfilled, (state, action) => {
+        state.loading = false;
+        state.user = action.payload;
+      })
+      .addCase(getUser.rejected, (state, action) => {
+        state.loading = false;
+        state.error = action.error;
+      });
   },
 });
 
@@ -239,8 +241,6 @@ const userUpdateProfileSlice = createSlice({
 export const { loginRequest, loginSuccess, loginFail, logOut, getName } =
   loginSlice.actions;
 
-export const { userDetailsRequest, userDetailsSuccess, userDetailsFail } =
-  userDetailsSlice.actions;
 export const { fetchUsersStart, fetchUsersSuccess, fetchUsersFail } =
   usersSlice.actions;
 export const {

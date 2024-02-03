@@ -1,6 +1,6 @@
 import { createSlice } from "@reduxjs/toolkit";
 import { Bid } from "../../types/Bid";
-import { bidArtwork } from "../../actions/bid";
+import { bidArtwork } from "../../actions/bid-service";
 
 interface bidState {
   loading: boolean;
@@ -19,19 +19,19 @@ export const bidSlice = createSlice({
   } as bidState,
   reducers: {},
   extraReducers: (builder) => {
-    builder.addCase(bidArtwork.pending, (state) => {
-      state.loading = true;
-    });
+    builder
+      .addCase(bidArtwork.pending, (state) => {
+        state.loading = true;
+      })
 
-    builder.addCase(bidArtwork.fulfilled, (state, action) => {
-      state.loading = false;
-      state.success = true;
-      state.biddings.push(action.payload);
-    });
-
-    builder.addCase(bidArtwork.rejected, (state, action) => {
-      state.loading = false;
-      state.error = action.payload;
-    });
+      .addCase(bidArtwork.fulfilled, (state, action) => {
+        state.loading = false;
+        state.success = true;
+        state.biddings.push(action.payload);
+      })
+      .addCase(bidArtwork.rejected, (state, action) => {
+        state.loading = false;
+        state.error = action.payload;
+      });
   },
 });

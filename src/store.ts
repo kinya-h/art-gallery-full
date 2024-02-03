@@ -1,12 +1,21 @@
 import { combineReducers, configureStore } from "@reduxjs/toolkit";
 import { bidSlice } from "./features/bid/bidSlice";
+import { userBiddingSlice } from "./features/bid/userBiddingSlice";
 import { TypedUseSelectorHook, useSelector } from "react-redux";
-import { loginSlice, registerSlice } from "./features/login/loginSlice";
+import {
+  loginSlice,
+  registerSlice,
+  userDetailsSlice,
+} from "./features/login/loginSlice";
+import { artworkSlice } from "./features/artwork/artworkSlice";
 
 const reducer = combineReducers({
   biddingList: bidSlice.reducer,
   registeredUser: registerSlice.reducer,
-  authUser: loginSlice.reducer,
+  tokens: loginSlice.reducer,
+  featuredArtworks: artworkSlice.reducer,
+  userBiddings: userBiddingSlice.reducer,
+  authenticatedUser: userDetailsSlice.reducer,
 });
 
 export const store = configureStore({

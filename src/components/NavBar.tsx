@@ -1,11 +1,18 @@
 import React, { useState, useEffect } from "react";
-import { divider,logo } from "../assets";
+import { divider, logo } from "../assets";
 import { Link } from "react-router-dom";
 import { RiMenuLine } from "react-icons/ri";
-import { BiChevronDown, BiChevronUp } from "react-icons/bi";
+import {  BiChevronUp } from "react-icons/bi";
 import ClickAwayListener from "@mui/material/ClickAwayListener";
+import Search from "./Search";
+import Avatar from "./Avatar";
 
 const NavBar = () => {
+  // const location = useLocation();
+  // const { pathname } = location;
+  /* */
+  const currentPathname = window.location.pathname;
+
   const [isMenuOpen, setMenuOpen] = useState(false);
   const [theme, setTheme] = useState("night");
 
@@ -33,6 +40,8 @@ const NavBar = () => {
     e.preventDefault();
     setMenuOpen(false);
   };
+
+  const renderSearch = currentPathname === "/home" && <Search />;
 
   return (
     <ClickAwayListener onClickAway={handleClickAway}>
@@ -70,6 +79,7 @@ const NavBar = () => {
             id="navbar-default"
           >
             <ul className="font-medium  flex items-center flex-col p-4 md:p-0 mt-4 border rounded-lg  md:flex-row md:space-x-8 md:mt-0 md:border-0  dark:bg-greenish md:dark:bg-greenish border-gray-700">
+              <li>{renderSearch}</li>
               <li onClick={closeMenu}>
                 <Link
                   to="/home"
@@ -101,29 +111,17 @@ const NavBar = () => {
                 </Link>
               </li>
 
-              {/* Products */}
-
-              <li onClick={closeMenu}>
-                <Link
-                  to="/products"
-                  className="block py-2 pl-3 pr-4 text-white rounded hover:bg-gray-700 sm:hover:text-blue-700 md:hover:bg-transparent md:border-0 md:hover:text-blue-700 md:p-0 dark:text-white-mode md:dark:hover:text-blue-500 dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent"
-                  aria-current="page"
-                >
-                  Products
-                </Link>
-              </li>
-
               {/* Contacts */}
-              <li onClick={closeMenu}>
+              {/* <li onClick={closeMenu}>
                 <Link
                   to="/contacts"
                   className="block py-2 pl-3 pr-4 text-white rounded hover:bg-gray-700  sm:hover:text-blue-700 md:hover:text-blue-700 md:p-0 dark:text-white-mode md:dark:hover:text-blue-500 dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent"
                 >
                   Contacts
                 </Link>
-              </li>
+              </li> */}
 
-              <li className="py-2 pl-3 pr-4 text-blue-500 font-normal hover:text-blue-500  text-white mr-10  text-[16px]">
+              <li className="py-2 pl-3 pr-4  font-normal hover:text-blue-500  text-white mr-10  text-[16px]">
                 <div>
                   <img className="divider" src={divider} />
                 </div>
@@ -185,6 +183,9 @@ const NavBar = () => {
                     <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
                   </svg>
                 </label>
+              </li>
+              <li>
+                <Avatar />
               </li>
             </ul>
           </div>

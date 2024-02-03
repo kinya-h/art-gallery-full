@@ -5,6 +5,7 @@ import { createAsyncThunk } from "@reduxjs/toolkit";
 import { Token } from "../types/Token";
 import { User } from "../types/User";
 import { API_URL } from "../constants";
+import { axiosInstance } from "../services/axiosInstance";
 
 export const signIn = createAsyncThunk<string, { email: string }>(
   "user/login",
@@ -46,21 +47,12 @@ export const signUpUser = createAsyncThunk<
   return response.data as User;
 });
 
-// const getUser = async () => {
-//   try {
-//     const response = await axiosInstance.get("auth/users/me");
+export const getUser = createAsyncThunk<
+  User>("user/fetch", async () => {
+  const response = await axiosInstance.get(`${API_URL}/auth/users/me`);
 
-//     if (response.status === 200) {
-//       // navigate("/");
-//       // setUserName(response.data.username);
-//     }
-
-//     return response;
-//   } catch (error) {
-//     // logoutUser();
-//     console.error(error);
-//   }
-// };
+  return response.data as User;
+});
 
 // export const fetchUserData =
 //   (accessToken: string) => async (dispatch: Dispatch) => {

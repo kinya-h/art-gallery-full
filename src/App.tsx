@@ -49,7 +49,7 @@ const router = createBrowserRouter(
 );
 
 function App() {
-  return <RouterProvider router={router} data-theme="cupcake" />;
+  return <RouterProvider router={router}  />;
 }
 
 export default App;

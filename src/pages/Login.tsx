@@ -7,7 +7,7 @@ import { RootState } from "../store";
 import Loader from "../components/Loader";
 
 const Login = () => {
-  const { loading } = useSelector((state: RootState) => state.authUser);
+  const { loading } = useSelector((state: RootState) => state.tokens);
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
   const [username, setUsername] = useState("");

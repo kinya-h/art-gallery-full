@@ -20,6 +20,6 @@ class Artwork(models.Model):
 
 
 class Bid(models.Model):
-    user = models.OneToOneField(settings.AUTH_USER_MODEL , on_delete=models.CASCADE)
+    user = models.ForeignKey(settings.AUTH_USER_MODEL , on_delete=models.CASCADE)
     artwork = models.ForeignKey(Artwork , on_delete=models.CASCADE , related_name='bidded_artwork')
     amount = models.DecimalField(max_digits=10, decimal_places=2)

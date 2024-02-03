@@ -6,7 +6,7 @@ from .models import Artwork,Bid
 
 @admin.register(Artwork)
 class ArtworkAdmin(admin.ModelAdmin):
-    list_display = ('id', 'title', 'artist', 'price', 'category' , 'highest_bid')
+    list_display = ('id', 'title', 'artist', 'description', 'price', 'category' , 'highest_bid')
     search_fields = ('title', 'artist')
 
 

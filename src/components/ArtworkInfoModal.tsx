@@ -1,5 +1,10 @@
+import { useSelector } from "react-redux";
 import { Artwork } from "../types/artwork";
 // import { ArtworkCard } from "./ArtworkCard";
+
+import Loader from "./Loader";
+import { RootState } from "../store";
+
 import ArtworkDetails from "./ArtworkDetails";
 
 interface artworkInfoModalProps {
@@ -7,13 +12,26 @@ interface artworkInfoModalProps {
 }
 
 export const ArtworkInfoModal = ({ artwork }: artworkInfoModalProps) => {
-  console.log("SELECTED ARTWORK", artwork);
+  const { loading, success } = useSelector(
+    (state: RootState) => state.biddingList
+  );
+
+
+  if (success) {
+    const closeButton = document.getElementById("close-modal");
+
+    // Triggering a click event on the button
+    if (closeButton) {
+      closeButton.click();
+    }
+  }
   return (
     <div>
       {/* Open the modal using document.getElementById('ID').showModal() method */}
       {/* <button className="btn" onClick={() => openModal()}>
         open modal
       </button> */}
+
       <h2>{artwork.artist}</h2>
       <dialog id="my_modal_1" className="modal">
         <div className="modal-box">
@@ -24,11 +42,18 @@ export const ArtworkInfoModal = ({ artwork }: artworkInfoModalProps) => {
             <form method="dialog">
               {/* if there is a button in form, it will close the modal */}
               {/* <button className="btn">Close</button> */}
-              <button className="btn btn-sm btn-circle btn-ghost absolute right-2 top-2">
+              <button
+                className="btn btn-sm btn-circle btn-ghost  absolute right-2 top-2"
+                id="close-modal"
+              >
                 ✕
               </button>
             </form>
           </div>
+          <div className="flex items-center justify-center top-2">
+            {loading && <Loader />}
+          </div>
+
           <div className="flex justify-center items-center">
             <ArtworkDetails artwork={artwork} />
           </div>

@@ -8,9 +8,11 @@ export type Bid = {
   amount: number;
 };
 
-
 export interface BidCreationPayload {
-  user: User;
-  artwork: Artwork;
+  userId: number;
+  artworkId: number;
   amount: number;
+}
+export interface UserBidsPayload {
+  userId: number;
 }
