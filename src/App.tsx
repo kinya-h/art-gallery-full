@@ -15,6 +15,8 @@ import ProductDetails from "./pages/ProductDetails";
 import About from "./pages/About";
 import Contacts from "./pages/Contacts";
 import AdminPage from "./pages/AdminPage";
+import Profile from "./pages/Profile";
+import Docs from "./pages/Docs";
 
 const router = createBrowserRouter(
   createRoutesFromElements(
@@ -43,13 +45,15 @@ const router = createBrowserRouter(
       </Route>
 
       <Route path="contacts" element={<Contacts />} />
+      <Route path="profile" element={<Profile />} />
+      <Route path="docs" element={<Docs />} />
       {/* <Route path="/checkout/my-orders" element={<Orders />} /> */}
     </Route>
   )
 );
 
 function App() {
-  return <RouterProvider router={router}  />;
+  return <RouterProvider router={router} />;
 }
 
 export default App;

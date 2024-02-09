@@ -1,7 +1,7 @@
 import { Link, useNavigate } from "react-router-dom";
 import React, { useState } from "react";
 import { useAppDispatch } from "../lib/hooks";
-import { loginUser } from "../actions/userActions";
+import { getUser, loginUser } from "../actions/userActions";
 import { useSelector } from "react-redux";
 import { RootState } from "../store";
 import Loader from "../components/Loader";
@@ -17,6 +17,7 @@ const Login = () => {
     event.preventDefault();
     const payload = await dispatch(loginUser({ username, password }));
     if (payload.type === "user/login/fulfilled") {
+      // dispatch(getUser()); //load and initialize the user
       navigate("/home");
     }
   };

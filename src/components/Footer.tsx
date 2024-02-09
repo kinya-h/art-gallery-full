@@ -2,8 +2,8 @@ import { logo } from "../assets";
 
 const Footer = () => {
   return (
-    <div>
-      <footer className="footer p-10 bg-neutral text-neutral-content">
+    <div className="">
+      <footer className="footer p-10 bg-neutral text-neutral-content   mt-36 ">
         <aside>
           <div>
             <img src={logo} className="h-16 w-16 mr-3" alt="Artbid Connect" />

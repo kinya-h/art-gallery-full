@@ -21,6 +21,7 @@ interface RegisterState {
 interface UserDetailsState {
   user: User;
   loading: boolean;
+  success: boolean;
   error: string | unknown;
 }
 
@@ -173,6 +174,7 @@ export const userDetailsSlice = createSlice({
   initialState: {
     user: {},
     loading: false,
+    success: false,
     error: "",
   } as UserDetailsState,
   reducers: {},
@@ -183,6 +185,7 @@ export const userDetailsSlice = createSlice({
       })
       .addCase(getUser.fulfilled, (state, action) => {
         state.loading = false;
+        state.success = true;
         state.user = action.payload;
       })
       .addCase(getUser.rejected, (state, action) => {

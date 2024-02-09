@@ -3,7 +3,7 @@ from rest_framework import serializers
 from django.conf import settings
 from django.contrib.auth.models import User
 from django.db import models
-from .models import Artwork, Bid
+from .models import Artwork, Bid,Artist
 
 
 
@@ -65,5 +65,25 @@ class BidCreateSerializer(serializers.ModelSerializer):
   
 
 
-    
-   
+class ArtistSerializer(serializers.ModelSerializer):
+    user = UserSerializer(read_only=True)
+    class Meta:
+        model = Artist
+        fields = ['user' , 'bio']
+        
+    def get_user(self,obj):
+        user = obj.user
+        return {
+            'id': user.id,
+            'username': user.username,
+            'email': user.email,
+        }
+
+
+
+class ArtistCreateSerializer(serializers.ModelSerializer):
+    user = serializers.PrimaryKeyRelatedField(queryset=User.objects.all())  
+
+    class Meta:
+        model = Artist
+        fields = ['user', 'bio']

@@ -1,17 +1,17 @@
 import React, { useState, useEffect } from "react";
 import { divider, logo } from "../assets";
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import { RiMenuLine } from "react-icons/ri";
-import {  BiChevronUp } from "react-icons/bi";
+import { BiChevronUp } from "react-icons/bi";
 import ClickAwayListener from "@mui/material/ClickAwayListener";
 import Search from "./Search";
 import Avatar from "./Avatar";
 
 const NavBar = () => {
-  // const location = useLocation();
-  // const { pathname } = location;
+  const location = useLocation();
+  const { pathname } = location;
   /* */
-  const currentPathname = window.location.pathname;
+  // const currentPathname = window.location.pathname;
 
   const [isMenuOpen, setMenuOpen] = useState(false);
   const [theme, setTheme] = useState("night");
@@ -41,8 +41,9 @@ const NavBar = () => {
     setMenuOpen(false);
   };
 
-  const renderSearch = currentPathname === "/home" && <Search />;
-
+  const renderSearch = pathname === "/home" && <Search />;
+  console.log("PATH", pathname);
+  
   return (
     <ClickAwayListener onClickAway={handleClickAway}>
       <nav className="w-full fixed z-50 top-0  border-gray-200 mb-20">
@@ -185,7 +186,9 @@ const NavBar = () => {
                 </label>
               </li>
               <li>
-                <Avatar />
+                <Link to="/profile">
+                  <Avatar />
+                </Link>
               </li>
             </ul>
           </div>
