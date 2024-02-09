@@ -3,7 +3,7 @@ from rest_framework import serializers
 from django.conf import settings
 from django.contrib.auth.models import User
 from django.db import models
-from .models import Artwork, Bid,Artist
+from .models import Artwork, Bid,Artist, Follow, Project
 
 
 
@@ -87,3 +87,15 @@ class ArtistCreateSerializer(serializers.ModelSerializer):
     class Meta:
         model = Artist
         fields = ['user', 'bio']
+
+
+
+class FollowSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Follow
+        fields = ['user', 'artist', 'created_at']
+
+class ProjectSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Project
+        fields = ['title', 'description', 'collaborators', 'active']

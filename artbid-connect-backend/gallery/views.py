@@ -5,8 +5,11 @@ from rest_framework.response import Response
 from rest_framework.permissions import  IsAdminUser, IsAuthenticated,AllowAny
 
 
-from .models import Artwork , Bid, Artist
-from .serializers import ArtworkSerializer, BidSerializer,BidCreateSerializer,ArtistSerializer, ArtistCreateSerializer,ArtistSerializer
+from .models import Artwork , Bid, Artist , Project , Follow
+from .serializers import (
+    ArtworkSerializer, BidSerializer,BidCreateSerializer,
+    ArtistSerializer, ArtistCreateSerializer,ArtistSerializer,
+    FollowSerializer , ProjectSerializer)
 
 
 # Create your views here.
@@ -69,3 +72,12 @@ class ArtistViewSet(viewsets.ModelViewSet):
         #         serializer.save(user=request.user)
         #         return Response({'message': 'Bid created successfully'})
         #     return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)    
+
+
+class FollowViewSet(viewsets.ModelViewSet):
+    queryset = Follow.objects.all()
+    serializer_class = FollowSerializer
+
+class ProjectViewSet(viewsets.ModelViewSet):
+    queryset = Project.objects.all()
+    serializer_class = ProjectSerializer
