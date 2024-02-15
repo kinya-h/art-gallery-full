@@ -98,4 +98,4 @@ class FollowSerializer(serializers.ModelSerializer):
 class ProjectSerializer(serializers.ModelSerializer):
     class Meta:
         model = Project
-        fields = ['title', 'description', 'collaborators', 'active']
+        fields = ['title', 'description', 'creator', 'active', 'created_at']

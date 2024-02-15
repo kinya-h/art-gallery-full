@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import Artwork,Bid ,Artist
+from .models import Artwork,Bid ,Artist , Project
 
 # class WalletInline(admin.TabularInline):
 #     model = Wallet
@@ -33,5 +33,12 @@ class BidAdmin(admin.ModelAdmin):
 class ArtistAdmin(admin.ModelAdmin):
     list_display = ('id', 'user',  'bio')
     search_fields = ('user__username', )
+
+  
+    
+@admin.register(Project)
+class ProjectAdmin(admin.ModelAdmin):
+    list_display = ('id', 'title',  'creator' , 'description' , 'created_at')
+    search_fields = ('creator__username', 'title')
 
   

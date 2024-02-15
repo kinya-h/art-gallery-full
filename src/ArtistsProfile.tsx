@@ -1,35 +1,53 @@
 import React, { useState } from "react";
 import { Artist } from "./types/Artist";
+import { MdCreateNewFolder } from "react-icons/md";
+import NewProjectForm from "./components/NewProjectForm.";
 
-interface ArtistsProfileProps {
-  artist: Artist;
-}
+// interface ArtistsProfileProps {
+//   artist: Artist;
+// }
 
-const ArtistsProfile = ({ artist }: ArtistsProfileProps) => {
-  const [isEditing, setEditing] = useState(false);
-  const [editedProfile, setEditedProfile] = useState({ ...artist });
-  const [bio, setBio] = useState("");
-  const handleEditToggle = () => {
-    setEditing(!isEditing);
-  };
+const ArtistsProfile = () => {
+  const [create, setCreate] = useState(false);
 
-  console.log("editedProfile =>", editedProfile);
-  const handleInputChange = (e: React.MouseEvent) => {
-    // const { name, value } = e.target;
-    // setEditedProfile((prevProfile) => ({ ...prevProfile, [name]: value }));
-  };
+  // const [isEditing, setEditing] = useState(false);
+  // const [editedProfile, setEditedProfile] = useState({ ...artist });
+  // const [bio, setBio] = useState("");
+  // const handleEditToggle = () => {
+  //   setEditing(!isEditing);
+  // };
 
-  const handleSaveChanges = () => {
-    // Implement the logic to save changes to the backend
-    // For simplicity, let's just log the edited profile for now
-    console.log("Saved Changes:", editedProfile);
-    setEditing(false);
+  // console.log("editedProfile =>", editedProfile);
+  // const handleInputChange = (e: React.MouseEvent) => {
+  //   // const { name, value } = e.target;
+  //   // setEditedProfile((prevProfile) => ({ ...prevProfile, [name]: value }));
+  // };
+
+  // const handleSaveChanges = () => {
+  //   // Implement the logic to save changes to the backend
+  //   // For simplicity, let's just log the edited profile for now
+  //   console.log("Saved Changes:", editedProfile);
+  //   setEditing(false);
+  // };
+
+  const handleOpenCreateForm = (e: React.MouseEvent) => {
+    e.preventDefault();
+    setCreate(!create);
   };
 
   return (
     <div>
-      <h2>Artist Profile</h2>
-      {true ? (
+      <div className="flex">
+        <div className=" ml-auto tooltip" data-tip="New Project">
+          <button onClick={(e) => handleOpenCreateForm(e)}>
+            <MdCreateNewFolder className="text-primary" size={32} />
+          </button>
+        </div>
+      </div>
+
+      {/* New Project Form */}
+      {create && <NewProjectForm />}
+      {/* {true ? (
         <div>
           <label>
             Name:
@@ -67,7 +85,7 @@ const ArtistsProfile = ({ artist }: ArtistsProfileProps) => {
           <h3>{artist?.user?.username}</h3>
           <p>{artist?.bio}</p>
           {/* <p>Contact: {artist.contactInfo}</p> */}
-          <button onClick={(e) => handleEditToggle}>Edit Profile</button>
+      {/* <button onClick={(e) => handleEditToggle}>Edit Profile</button>
         </div>
       )}
 
@@ -75,7 +93,7 @@ const ArtistsProfile = ({ artist }: ArtistsProfileProps) => {
 
       <div>
         <h3>Artworks</h3>
-      </div>
+      </div> */}
     </div>
   );
 };

@@ -27,14 +27,24 @@ class Follow(models.Model):
         unique_together = ('user', 'artist')
     
 class Project(models.Model):
+
     title = models.CharField(max_length=255)
     description = models.TextField()
-    collaborators = models.ForeignKey(Artist , on_delete=models.DO_NOTHING)
+    creator = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
     active = models.BooleanField(default=True)
+    created_at = models.DateTimeField(auto_now_add=True)
 
     
     class Meta:
-        unique_together = [['title', 'collaborators']]
+        unique_together = [['title', 'creator']]
+
+class Collaborator(models.Model):
+    artist = models.ForeignKey(Artist, on_delete=models.CASCADE)
+    project = models.ForeignKey(Project, on_delete=models.CASCADE)
+
+    class Meta:
+        unique_together = ('artist', 'project')
+        
 
 class Artwork(models.Model):
     title = models.CharField(max_length=255)
