@@ -5,19 +5,29 @@ from rest_framework.response import Response
 from rest_framework.permissions import  IsAdminUser, IsAuthenticated,AllowAny
 
 
-from .models import Artwork , Bid, Artist , Project , Follow
+from .models import Artwork , Bid,Collection, Artist , Project , Follow , Collaborator
 from .serializers import (
-    ArtworkSerializer, BidSerializer,BidCreateSerializer,
+    ArtworkSerializer,ArtistCreateSerializer, BidSerializer,BidCreateSerializer,
     ArtistSerializer, ArtistCreateSerializer,ArtistSerializer,
-    FollowSerializer , ProjectSerializer)
+    FollowSerializer , ProjectSerializer ,ArtworkCreateSerializer , CollectionSerializer,ProjectCreateSerializer, CollaboratorSerializer , CollaboratorCreateSerializer)
 
 
 # Create your views here.
 
 class ArtworkViewSet(viewsets.ModelViewSet):
     queryset = Artwork.objects.all()
-    serializer_class = ArtworkSerializer
-    permission_classes = [AllowAny]
+    # permission_classes = [IsAuthenticated]
+    
+    
+    def get_serializer_class(self):
+        if self.request.method == 'POST':
+            return ArtworkCreateSerializer
+        return ArtworkSerializer
+            
+class CollectionViewSet(viewsets.ModelViewSet):
+    queryset = Collection.objects.all()
+    serializer_class = CollectionSerializer
+    permission_classes = [IsAuthenticated]
 
 class BiddingViewSet(viewsets.ModelViewSet):
     queryset = Bid.objects.all()
@@ -80,4 +90,33 @@ class FollowViewSet(viewsets.ModelViewSet):
 
 class ProjectViewSet(viewsets.ModelViewSet):
     queryset = Project.objects.all()
-    serializer_class = ProjectSerializer
+
+    def get_serializer_class(self):
+        if self.request.method == 'POST':
+            return ProjectCreateSerializer  
+        return ProjectSerializer
+    
+    
+class CollaboratorViewSet(viewsets.ModelViewSet):
+    queryset = Collaborator.objects.all()
+    
+    def get_serializer_class(self):
+        if self.request.method == 'POST':
+            return CollaboratorCreateSerializer  
+        return CollaboratorSerializer
+    
+    
+    @action(detail=False, methods=['GET', 'PUT'])
+    def me(self, request):
+        try:
+            artist = Collaborator.objects.filter(artist__user=request.user)
+
+            if request.method == 'GET':
+                serializer = CollaboratorSerializer(artist, many=True)
+                return Response(serializer.data)     
+        
+        except Exception as e:
+            return Response({'message': 'Invalid Request , access token Required!'} , status=status.HTTP_400_BAD_REQUEST)
+            
+            
+            

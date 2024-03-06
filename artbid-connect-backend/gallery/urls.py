@@ -11,5 +11,7 @@ router.register("artworks" , views.ArtworkViewSet , basename="artworks")
 router.register("artists" , views.ArtistViewSet , basename="artists")
 router.register('follows', views.FollowViewSet, basename='follows')
 router.register('projects', views.ProjectViewSet, basename='projects')
+router.register('collaborators', views.CollaboratorViewSet, basename='collaborators')
+router.register('collections', views.CollectionViewSet, basename='collections')
 
 urlpatterns = router.urls 
