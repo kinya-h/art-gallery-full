@@ -42,45 +42,45 @@ export const MarkdownRenderer = ({
     return <p style={paragraphStyles}>{props.children}</p>;
   };
 
-  const generateCustomTableOfContents = (markdownContent: string) => {
-    const tocLines: string[] = [];
-    const lines = markdownContent.split("\n");
-    let currentIndent = 0;
+  // const generateCustomTableOfContents = (markdownContent: string) => {
+  //   const tocLines: string[] = [];
+  //   const lines = markdownContent.split("\n");
+  //   let currentIndent = 0;
 
-    for (const line of lines) {
-      const match = /^(#+)\s+(.*)$/.exec(line);
+  //   for (const line of lines) {
+  //     const match = /^(#+)\s+(.*)$/.exec(line);
 
-      if (match) {
-        const headingLevel = match[1].length;
-        const headingText = match[2];
-        const indent = headingLevel - 1;
+  //     if (match) {
+  //       const headingLevel = match[1].length;
+  //       const headingText = match[2];
+  //       const indent = headingLevel - 1;
 
-        if (indent > currentIndent) {
-          // Increase the indentation for subsections in the table of contents
-          tocLines.push(
-            `${" ".repeat(currentIndent * 2)}1.${" ".repeat(
-              (indent - currentIndent) * 2
-            )} [${headingText}](#${headingText
-              .toLowerCase()
-              .replace(/\s/g, "-")})`
-          );
-        } else {
-          // Reset or decrease the indentation
-          tocLines.push(
-            `${" ".repeat(indent * 2)}1. [${headingText}](#${headingText
-              .toLowerCase()
-              .replace(/\s/g, "-")})`
-          );
-        }
+  //       if (indent > currentIndent) {
+  //         // Increase the indentation for subsections in the table of contents
+  //         tocLines.push(
+  //           `${" ".repeat(currentIndent * 2)}1.${" ".repeat(
+  //             (indent - currentIndent) * 2
+  //           )} [${headingText}](#${headingText
+  //             .toLowerCase()
+  //             .replace(/\s/g, "-")})`
+  //         );
+  //       } else {
+  //         // Reset or decrease the indentation
+  //         tocLines.push(
+  //           `${" ".repeat(indent * 2)}1. [${headingText}](#${headingText
+  //             .toLowerCase()
+  //             .replace(/\s/g, "-")})`
+  //         );
+  //       }
 
-        currentIndent = indent;
-      }
-    }
+  //       currentIndent = indent;
+  //     }
+  //   }
 
-    return tocLines.join("\n");
-  };
+  //   return tocLines.join("\n");
+  // };
 
-  const customTableOfContents = generateCustomTableOfContents(markdownContent);
+  // const customTableOfContents = generateCustomTableOfContents(markdownContent);
 
   return (
     <div>

@@ -1,11 +1,11 @@
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import React, { useState } from "react";
 import { signUpUser } from "../actions/userActions";
 import { useAppDispatch } from "../lib/hooks";
 
 const Register = () => {
   const dispatch = useAppDispatch();
-
+  const navigate = useNavigate();
   const [username, setUsername] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -14,7 +14,10 @@ const Register = () => {
   const handleSignUp = async (event: React.FormEvent) => {
     event.preventDefault();
     if (password === confirmPassword) {
-      await dispatch(signUpUser({ username, email, password }));
+      const payload = await dispatch(signUpUser({ username, email, password }));
+      if (payload.type === "auth/registerUser/fulfilled") {
+        navigate("/login");
+      }
     }
   };
 

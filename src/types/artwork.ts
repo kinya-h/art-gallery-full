@@ -1,3 +1,8 @@
+export type Collection = {
+  id: number;
+  title: string;
+};
+
 export type Artwork = {
   id: number;
   title: string;
@@ -6,7 +11,7 @@ export type Artwork = {
   artist: string;
   created_at: number;
   price: number;
-  category: string;
+  collection: Collection;
   highest_bid: number;
 };
 
@@ -14,8 +19,8 @@ export type ArtworkCreatePayload = {
   title: string;
   imageSrc: string;
   description: string;
-  artist: string;
-  created_at: number;
+  artist: number;
+  project: number;
   price: number;
-  category: string;
+  collection: number;
 };

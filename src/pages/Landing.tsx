@@ -1,18 +1,16 @@
 import Hero from "../components/Hero";
 import Cta from "../components/Cta";
-import { artworks } from "../assets/data";
-import { useAppDispatch } from "../lib/hooks";
-import { addArtwork } from "../actions/artwork-service";
+import ConnectCTA from "../components/ConnectCTA";
 
 const Landing = () => {
-  const dispatch = useAppDispatch();
+  // // bulk export from a json file
+  // const handleExport = async () => {
+  //   console.log("Export Started...");
+  //   artworks.forEach(async (artwork) => {
+  //     // await dispatch(createArtwork(artwork));
+  //   });
+  // };
 
-  const handleExport = async () => {
-    console.log("Export Started...");
-    artworks.forEach(async (artwork) => {
-      await dispatch(addArtwork(artwork));
-    });
-  };
   return (
     <div className="mt-20">
       {/* Filter  */}
@@ -20,6 +18,7 @@ const Landing = () => {
         <Hero />
 
         <Cta />
+        <ConnectCTA />
       </div>
     </div>
   );

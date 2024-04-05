@@ -4,7 +4,7 @@ from django.conf import settings
 from django.contrib.auth.models import User
 from django.db import models
 from .models import (
-    Artwork, Bid,Artist, Follow, Project, Collaborator , Collection)
+    Artwork, Bid,Artist, Follow, Project, Collaborator , Collection , Buyer)
 
 
 
@@ -113,26 +113,42 @@ class FollowSerializer(serializers.ModelSerializer):
 
 class ProjectSerializer(serializers.ModelSerializer):
     
-    creator = UserSerializer(read_only=True)
+    creator = ArtistSerializer(read_only=True)
     class Meta:
         model = Project
         fields = [ 'id' , 'title', 'description', 'creator', 'active', 'visibility', 'created_at']
     
-    def get_creator(self,obj):
-        user = obj.creator
-        return {
-            'id': user.id,
-            'username': user.username,
-            'email': user.email,
-        }
+    # def get_creator(self,obj):
+    #     creator = obj.creator
+    #     return {
+    #         'id': creator.id,
+    #         'username': creator.username,
+    #         'email': creator.email,
+    #     }
         
 
 class ProjectCreateSerializer(serializers.ModelSerializer):
-    creator = serializers.PrimaryKeyRelatedField(queryset=User.objects.all())  
+    creator = serializers.PrimaryKeyRelatedField(queryset=Artist.objects.all())  
     class Meta:
         model = Project
         fields = ['title', 'description', 'creator']
         
+class BuyerCreateSerializer(serializers.ModelSerializer):
+    buyer = serializers.PrimaryKeyRelatedField(queryset=User.objects.all())  
+    artwork = serializers.PrimaryKeyRelatedField(queryset=Artwork.objects.all())  
+    class Meta:
+        model = Buyer
+        fields = ['buyer', 'artwork', 'amount']
+
+
+class BuyerSerializer(serializers.ModelSerializer):
+    buyer = UserSerializer(read_only=True)
+    artwork = ArtworkSerializer(read_only=True)
+    
+    class Meta:
+        model = Buyer
+        fields = ['buyer' , 'artwork' , 'amount']
+
 class CollaboratorSerializer(serializers.ModelSerializer):
 
     artist = ArtistSerializer(read_only=True)

@@ -3,19 +3,27 @@ from rest_framework import viewsets,status
 from rest_framework.decorators import action, permission_classes
 from rest_framework.response import Response
 from rest_framework.permissions import  IsAdminUser, IsAuthenticated,AllowAny
+from rest_framework.filters import SearchFilter
+from django.views.generic import TemplateView
 
-
-from .models import Artwork , Bid,Collection, Artist , Project , Follow , Collaborator
+from .models import Artwork , Bid,Collection, Buyer, Artist , Project , Follow , Collaborator
 from .serializers import (
     ArtworkSerializer,ArtistCreateSerializer, BidSerializer,BidCreateSerializer,
     ArtistSerializer, ArtistCreateSerializer,ArtistSerializer,
-    FollowSerializer , ProjectSerializer ,ArtworkCreateSerializer , CollectionSerializer,ProjectCreateSerializer, CollaboratorSerializer , CollaboratorCreateSerializer)
+    FollowSerializer , ProjectSerializer ,ArtworkCreateSerializer , CollectionSerializer,
+    ProjectCreateSerializer, CollaboratorSerializer ,
+    CollaboratorCreateSerializer , BuyerCreateSerializer , BuyerSerializer)
 
 
 # Create your views here.
 
+class ReactAppView(TemplateView):
+    template_name = 'index.html'
+
 class ArtworkViewSet(viewsets.ModelViewSet):
     queryset = Artwork.objects.all()
+    filter_backends = [SearchFilter]
+    search_fields = ['title' , 'description' , 'artist']
     # permission_classes = [IsAuthenticated]
     
     
@@ -27,7 +35,6 @@ class ArtworkViewSet(viewsets.ModelViewSet):
 class CollectionViewSet(viewsets.ModelViewSet):
     queryset = Collection.objects.all()
     serializer_class = CollectionSerializer
-    permission_classes = [IsAuthenticated]
 
 class BiddingViewSet(viewsets.ModelViewSet):
     queryset = Bid.objects.all()
@@ -95,6 +102,28 @@ class ProjectViewSet(viewsets.ModelViewSet):
         if self.request.method == 'POST':
             return ProjectCreateSerializer  
         return ProjectSerializer
+    
+    def create(self, request, *args, **kwargs):
+        # (project, created) = Project.objects.get_or_create(
+        #     creator_id=request.user.id)
+       
+        project_serializer = ProjectCreateSerializer(data=request.data)
+        project_serializer.is_valid(raise_exception=True)
+        project_instance = project_serializer.save()
+        
+        collaborator_serializer = CollaboratorCreateSerializer(data={'artist': project_instance.creator.id, 'project': project_instance.id})
+        collaborator_serializer.is_valid(raise_exception=True)
+        collaborator_serializer.save()
+        
+        return Response(project_serializer.data)
+        
+class BuyerVieSet(viewsets.ModelViewSet):
+    queryset = Buyer.objects.all()
+    
+    def get_serializer_class(self):
+        if self.request.method == 'POST':
+            return BuyerCreateSerializer  
+        return BuyerSerializer
     
     
 class CollaboratorViewSet(viewsets.ModelViewSet):

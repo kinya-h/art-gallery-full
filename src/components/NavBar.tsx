@@ -1,10 +1,9 @@
 import React, { useState, useEffect } from "react";
-import { divider, logo } from "../assets";
+import { divider, logo } from "../../public/assets";
 import { Link, useLocation } from "react-router-dom";
 import { RiMenuLine } from "react-icons/ri";
 import { BiChevronUp } from "react-icons/bi";
 import ClickAwayListener from "@mui/material/ClickAwayListener";
-import Search from "./Search";
 import Avatar from "./Avatar";
 
 const NavBar = () => {
@@ -41,9 +40,9 @@ const NavBar = () => {
     setMenuOpen(false);
   };
 
-  const renderSearch = pathname === "/home" && <Search />;
+  // const renderSearch = pathname === "/home" && <Search />;
   console.log("PATH", pathname);
-  
+
   return (
     <ClickAwayListener onClickAway={handleClickAway}>
       <nav className="w-full fixed z-50 top-0  border-gray-200 mb-20">
@@ -80,7 +79,7 @@ const NavBar = () => {
             id="navbar-default"
           >
             <ul className="font-medium  flex items-center flex-col p-4 md:p-0 mt-4 border rounded-lg  md:flex-row md:space-x-8 md:mt-0 md:border-0  dark:bg-greenish md:dark:bg-greenish border-gray-700">
-              <li>{renderSearch}</li>
+              {/* <li>{renderSearch}</li> */}
               <li onClick={closeMenu}>
                 <Link
                   to="/home"

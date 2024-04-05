@@ -1,4 +1,5 @@
-import { hero } from "../assets";
+import { Link } from "react-router-dom";
+import { hero } from "../../public/assets";
 
 const Hero = () => {
   return (
@@ -7,7 +8,9 @@ const Hero = () => {
         <div className="hero-content flex-col lg:flex-row-reverse">
           <img src={hero} className="max-w-md rounded-lg shadow-2xl" />
           <div>
-            <h1 className="text-5xl font-bold">Immersive Canvases!</h1>
+            <h1 className="text-5xl font-bold">
+              Elevate Your senses with Art!
+            </h1>
             <p className="py-6">
               Welcome to our vibrant digital canvas, where imagination knows no
               bounds and every stroke tells a story. Explore the vivid tapestry
@@ -20,7 +23,9 @@ const Hero = () => {
               inner art connoisseur and embark on a journey through creative
               horizons like never before
             </p>
-            <button className="btn btn-primary">Get Started</button>
+            <Link to="/home">
+              <button className="btn btn-primary">Get Started</button>
+            </Link>
           </div>
         </div>
       </div>

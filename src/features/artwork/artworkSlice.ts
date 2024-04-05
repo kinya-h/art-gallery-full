@@ -1,6 +1,10 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { Artwork } from "../../types/artwork";
-import { fetchArtworks } from "../../actions/artwork-service";
+import { Artwork, Collection } from "../../types/artwork";
+import {
+  fetchArtworks,
+  fetchCollections,
+  searchArtworks,
+} from "../../actions/artwork-service";
 
 interface artworkState {
   loading: boolean;
@@ -29,6 +33,43 @@ export const artworkSlice = createSlice({
         state.artworks = action.payload;
       })
       .addCase(fetchArtworks.rejected, (state, action) => {
+        state.loading = false;
+        state.error = action.payload;
+      })
+      .addCase(searchArtworks.pending, (state) => {
+        state.loading = true;
+      })
+      .addCase(searchArtworks.fulfilled, (state, action) => {
+        state.loading = false;
+        state.success = true;
+        state.artworks = action.payload;
+      })
+      .addCase(searchArtworks.rejected, (state, action) => {
+        state.loading = false;
+        state.error = action.payload;
+      });
+  },
+});
+
+interface collectionState {
+  loading: boolean;
+  collections: Collection[];
+  error: string | unknown;
+}
+export const collectionSlice = createSlice({
+  name: "collections",
+  initialState: <collectionState>{ loading: false, collections: [], error: "" },
+  reducers: {},
+  extraReducers: (builder) => {
+    builder
+      .addCase(fetchCollections.pending, (state) => {
+        state.loading = true;
+      })
+      .addCase(fetchCollections.fulfilled, (state, action) => {
+        state.loading = false;
+        state.collections = action.payload;
+      })
+      .addCase(fetchCollections.rejected, (state, action) => {
         state.loading = false;
         state.error = action.payload;
       });

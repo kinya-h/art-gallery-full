@@ -36,7 +36,7 @@ export const loginUser = createAsyncThunk<
 export const signUpUser = createAsyncThunk<
   User,
   { username: string; email: string; password: string }
->("'auth/registerUser", async ({ username, email, password }) => {
+>("auth/registerUser", async ({ username, email, password }) => {
   const response = await axios.post(`${API_URL}/auth/users/`, {
     username,
     email,
@@ -47,8 +47,7 @@ export const signUpUser = createAsyncThunk<
   return response.data as User;
 });
 
-export const getUser = createAsyncThunk<
-  User>("user/fetch", async () => {
+export const getUser = createAsyncThunk<User>("user/fetch", async () => {
   const response = await axiosInstance.get(`${API_URL}/auth/users/me`);
 
   return response.data as User;

@@ -1,34 +1,40 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { useSelector } from "react-redux";
 import { RootState } from "../store";
 import { useAppDispatch } from "../lib/hooks";
 import { createProject } from "../actions/project-service";
-import { User } from "../types/User";
+import { Artist } from "../types/Artist";
 
-// interface NewProjectFormProps{
-//     create: boolean;
-// }
+interface NewProjectFormProps {
+  onCreate: () => void;
+}
 
-const NewProjectForm = () => {
+const NewProjectForm = ({ onCreate }: NewProjectFormProps) => {
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
 
-  const { user } = useSelector((state: RootState) => state.authenticatedUser);
+  const { artist } = useSelector((state: RootState) => state.currentAartist);
   const dispatch = useAppDispatch();
 
   //   useEffect(() => {
   //     //    dispatch()
   //   }, []);
 
-  const handleCreateNewProject = (e: React.FormEvent) => {
+  const handleCreateNewProject = async (e: React.FormEvent) => {
     e.preventDefault();
-    dispatch(
+    const payload = await dispatch(
       createProject({
         title: title,
         description: description,
-        creator: user as User,
+        creator: artist as Artist,
       })
     );
+
+    if (payload.type === "project/create/fulfilled") {
+      setTitle("");
+      setDescription("");
+      onCreate();
+    }
   };
 
   return (
@@ -61,6 +67,7 @@ const NewProjectForm = () => {
           <input
             type="text"
             placeholder="Project Title"
+            value={title}
             className="input input-bordered input-sm input-info w-full max-w-xs"
             onChange={(e) => setTitle(e.target.value)}
           />
@@ -70,6 +77,7 @@ const NewProjectForm = () => {
           </div>
           <textarea
             placeholder="Description"
+            value={description}
             className="textarea textarea-bordered textarea-info textarea-sm w-full max-w-xs"
             onChange={(e) => setDescription(e.target.value)}
           />

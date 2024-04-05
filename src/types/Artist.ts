@@ -1,6 +1,7 @@
 import { User } from "./User";
 
 export type Artist = {
+  id: number;
   user: User;
   bio: string;
   contactInfo: string;

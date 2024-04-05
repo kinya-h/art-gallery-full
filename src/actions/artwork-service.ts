@@ -1,28 +1,28 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
-import { Artwork, ArtworkCreatePayload } from "../types/artwork";
+import { Artwork, ArtworkCreatePayload, Collection } from "../types/artwork";
 import { axiosInstance } from "../services/axiosInstance";
-import axios from "axios";
 import { API_URL } from "../constants";
+import axios from "axios";
 
-export const addArtwork = createAsyncThunk<Artwork, ArtworkCreatePayload>(
+export const createArtwork = createAsyncThunk<Artwork, ArtworkCreatePayload>(
   "artwork/create",
   async ({
     title,
     imageSrc,
     description,
     artist,
-    created_at,
+    project,
     price,
-    category,
+    collection,
   }) => {
     const response = await axiosInstance.post("/api/artworks/", {
       title,
       imageSrc,
       description,
       artist,
-      created_at,
+      project,
       price,
-      category,
+      collection,
     });
 
     console.log("Bidded artwork", response.data);
@@ -31,7 +31,7 @@ export const addArtwork = createAsyncThunk<Artwork, ArtworkCreatePayload>(
 );
 
 export const fetchArtworks = createAsyncThunk<Artwork[]>(
-  "artworks/fetchArtworks",
+  "artworks/fetch",
   async () => {
     const response = await axios.get(`${API_URL}/api/artworks/`);
 
@@ -39,3 +39,25 @@ export const fetchArtworks = createAsyncThunk<Artwork[]>(
     return response.data as Artwork[];
   }
 );
+
+export const fetchCollections = createAsyncThunk<Collection[]>(
+  "collections/fetch",
+  async () => {
+    const response = await axios.get(`${API_URL}/api/collections/`);
+
+    return response.data as Collection[];
+  }
+);
+
+export const searchArtworks = createAsyncThunk<
+  Artwork[],
+  { searchTerm: string }
+>("artworks/search", async ({ searchTerm }) => {
+  const response = await axiosInstance.get(
+    `${API_URL}/api/artworks/?search=${searchTerm}`
+  );
+
+  console.log("FILTERED ARTWORKS == ", response.data);
+
+  return response.data as Artwork[];
+});

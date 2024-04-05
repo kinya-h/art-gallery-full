@@ -15,6 +15,7 @@ export const getCurrentArtist = createAsyncThunk<Artist>(
   "artist/fetch",
   async () => {
     const response = await axiosInstance.get("/api/artists/me/");
+    console.log("CURR ARTIST ===== ", response.data);
     return response.data[0] as Artist;
   }
 );

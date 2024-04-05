@@ -7,9 +7,13 @@ import {
   registerSlice,
   userDetailsSlice,
 } from "./features/login/loginSlice";
-import { artworkSlice } from "./features/artwork/artworkSlice";
+import { artworkSlice, collectionSlice } from "./features/artwork/artworkSlice";
 import { artistSlice, currentArtistSlice } from "./features/artist/artistSlice";
-import { projectSlice } from "./features/project/projectSlice";
+import {
+  CollaborateSlice,
+  artistCollabProjectsSlice,
+  projectSlice,
+} from "./features/project/projectSlice";
 
 const reducer = combineReducers({
   biddingList: bidSlice.reducer,
@@ -20,7 +24,10 @@ const reducer = combineReducers({
   authenticatedUser: userDetailsSlice.reducer,
   artists: artistSlice.reducer,
   currentAartist: currentArtistSlice.reducer,
-  projectList: projectSlice.reducer 
+  projectList: projectSlice.reducer,
+  projectCollaborators: CollaborateSlice.reducer,
+  artistCollabProjectsList: artistCollabProjectsSlice.reducer,
+  artworkCollections: collectionSlice.reducer,
 });
 
 export const store = configureStore({

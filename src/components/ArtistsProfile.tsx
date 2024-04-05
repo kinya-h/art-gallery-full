@@ -1,7 +1,6 @@
 import React, { useState } from "react";
-import { Artist } from "./types/Artist";
 import { MdCreateNewFolder } from "react-icons/md";
-import NewProjectForm from "./components/NewProjectForm.";
+import NewProjectForm from "./NewProjectForm.";
 
 // interface ArtistsProfileProps {
 //   artist: Artist;
@@ -35,6 +34,10 @@ const ArtistsProfile = () => {
     setCreate(!create);
   };
 
+  const closeCreateProjectForm = () => {
+    setCreate(false);
+  };
+
   return (
     <div>
       <div className="flex">
@@ -46,7 +49,7 @@ const ArtistsProfile = () => {
       </div>
 
       {/* New Project Form */}
-      {create && <NewProjectForm />}
+      {create && <NewProjectForm onCreate={closeCreateProjectForm} />}
       {/* {true ? (
         <div>
           <label>

@@ -17,7 +17,7 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path, include
 from django.views.generic import  TemplateView
-# from core.views import ReactAppView
+from gallery.views import ReactAppView
 
 # import debug_toolbar
 
@@ -25,17 +25,16 @@ admin.site.site_header = 'ARTBID CONNECT'
 admin.site.index_title = 'Admin'
 
 urlpatterns = [
+    path('', TemplateView.as_view(template_name='index.html')),
     path('admin/', admin.site.urls),
+    
    
-    # path('', include("django_nextjs.urls")),
-    # path('', TemplateView.as_view(template_name='index.html')),
-    # path('', ReactAppView.as_view(), name='react-app'),
-    # path('login/', ReactAppView.as_view(), name='react-app-login'),
-    # path('register/', ReactAppView.as_view(), name='react-app-register'),
-    # path('home/', ReactAppView.as_view(), name='react-app-home'),
-    # path('about/', ReactAppView.as_view(), name='react-app-about'),
-    # path('contacts/', ReactAppView.as_view(), name='react-app-contacts'),
-    #  path('login/', TemplateView.as_view(template_name='login.html')),
+    path('login/', ReactAppView.as_view(), name='react-app-login'),
+    path('register/', ReactAppView.as_view(), name='react-app-register'),
+    path('home/', ReactAppView.as_view(), name='react-app-home'),
+    path('about/', ReactAppView.as_view(), name='react-app-about'),
+    path('profile/', ReactAppView.as_view(), name='react-app-profile'),
+    path('artist-onboard/', ReactAppView.as_view(), name='react-app-artist-onboard'),
     path('api/', include('gallery.urls')),
      path('auth/', include('djoser.urls')),
     path('auth/', include('djoser.urls.jwt')),

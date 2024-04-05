@@ -1,68 +1,47 @@
 import { useEffect, useState } from "react";
-import { MdDashboard, MdMenuOpen } from "react-icons/md";
-import { RiLoginBoxLine, RiMailSendFill } from "react-icons/ri";
-import { BiArrowBack } from "react-icons/bi";
+import { MdDashboard } from "react-icons/md";
 import { FaUsers } from "react-icons/fa";
-import { AiOutlineLogout } from "react-icons/ai";
-import { BsCalendar2EventFill } from "react-icons/bs";
-import { MdNotificationsActive } from "react-icons/md";
-import { Link, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { useAppDispatch } from "../lib/hooks";
 import { BiChevronDown, BiChevronUp } from "react-icons/bi";
 import { FaProjectDiagram } from "react-icons/fa";
-import { useSelector } from "react-redux";
-import { RootState } from "../store";
 import { fetchProjects } from "../actions/project-service";
 import { Project } from "../types/Project";
-import { RiExpandLeftLine, RiExpandRightLine } from "react-icons/ri";
+import { RiExpandLeftLine } from "react-icons/ri";
+import { LockIcon } from "./Icons";
 
 interface SideBarProps {
-  onProjectSelect: (project: Project) => void;
+  onProjectSelect?: (project: Project) => void;
+  onSelectedVisibility: (visibility: string) => void;
 }
 
-const SideBar = ({ onProjectSelect }: SideBarProps) => {
+const SideBar = ({ onSelectedVisibility }: SideBarProps) => {
   const navigate = useNavigate();
   const [open, setOpen] = useState(true);
   const dispatch = useAppDispatch();
   const [openMenu, setOpenMenu] = useState(false);
-  const { projects } = useSelector((state: RootState) => state.projectList);
+  // const { projects } = useSelector((state: RootState) => state.projectList);
 
   useEffect(() => {
     dispatch(fetchProjects());
   }, []);
 
-  const navigateHome = () => {
-    navigate("/home");
-  };
-  const handleReceiveInvitations = () => {
-    navigate("/event/invites");
-  };
-  const handleSentInvitations = () => {
-    navigate("/event/sent-invitation");
-  };
   const handleNewEvent = () => {
     navigate("/add/event");
   };
   const handleUsers = () => {
     navigate("/users");
   };
-  const handleNotifications = () => {
-    navigate("/notifications");
-  };
 
-  const logoutUser = () => {
-    dispatch({ type: "AUTH_RESET" });
+  // const logoutUser = () => {
+  //   dispatch({ type: "AUTH_RESET" });
 
-    navigate("/login");
-  };
+  //   navigate("/login");
+  // };
 
   const toggleMenu = () => {
     setOpenMenu(!openMenu);
     setOpen(true);
-  };
-
-  const handleSelectProject = (project: Project) => {
-    onProjectSelect(project);
   };
 
   const Menus = [
@@ -72,25 +51,28 @@ const SideBar = ({ onProjectSelect }: SideBarProps) => {
       handleClick: handleNewEvent,
     },
 
-    {
-      title: "Received Invites",
-      icon: (
-        <RiLoginBoxLine className="w-8 h-8 text-lightergray rounded-full hover:bg-gray-100 text-3xl" />
-      ),
-      handleClick: handleReceiveInvitations,
-    },
-    {
-      title: "Sent Invitations",
-      icon: (
-        <RiMailSendFill className="w-8 h-8 text-lightergray rounded-full  text-3xl" />
-      ),
-      handleClick: handleSentInvitations,
-    },
+    // {
+    //   title: "Received Invites",
+    //   icon: (
+    //     <RiLoginBoxLine className="w-8 h-8 text-lightergray rounded-full hover:bg-gray-100 text-3xl" />
+    //   ),
+    //   handleClick: handleReceiveInvitations,
+    // },
+    // {
+    //   title: "Sent Invitations",
+    //   icon: (
+    //     <RiMailSendFill className="w-8 h-8 text-lightergray rounded-full  text-3xl" />
+    //   ),
+    //   handleClick: handleSentInvitations,
+    // },
 
     {
-      title: "Users",
+      title: "Collaborators",
       icon: (
-        <FaUsers className="w-8 h-8 rounded-full hover:bg-gray-100 text-3xl" />
+        <FaUsers
+          size={24}
+          className="rounded-full hover:bg-gray-100 text-3xl"
+        />
       ),
       handleClick: handleUsers,
     },
@@ -112,6 +94,20 @@ const SideBar = ({ onProjectSelect }: SideBarProps) => {
     //   ),
     //   handleClick: logoutUser,
     // },
+  ];
+  const handleSelectedType = (visibility: string) => {
+    onSelectedVisibility(visibility);
+  };
+
+  const visibilities = [
+    {
+      type: "public",
+      icon: <LockIcon className="w-4 h-4" />,
+    },
+    {
+      type: "private",
+      icon: <LockIcon className="w-4 h-4" />,
+    },
   ];
 
   return (
@@ -138,7 +134,7 @@ const SideBar = ({ onProjectSelect }: SideBarProps) => {
           Artbid connect
         </h1>
       </div>
-      <ul className="flex flex-col justify-between -mt-36 bg-base-200 ">
+      <ul className="flex flex-col justify-between -mt-72 bg-base-200 ">
         {Menus.map((Menu, index) => (
           <li
             key={index}
@@ -176,7 +172,7 @@ const SideBar = ({ onProjectSelect }: SideBarProps) => {
                   <ul
                     className={`flex flex-col justify-between  gap-y-4 w-full p-1.5 rounded-md bg-base-200 `}
                   >
-                    {projects.map((project, i) => (
+                    {/* {projects.map((project, i) => (
                       <li
                         className="rounded-md  flex items-center text-primary  pt-1 bg-base-200 hover:bg-gray-800 "
                         key={i}
@@ -187,6 +183,24 @@ const SideBar = ({ onProjectSelect }: SideBarProps) => {
                         <span className="badge badge-accent ml-2 text-xs">
                           {project.active ? "active" : ""}
                         </span>
+                      </li>
+                    ))} */}
+
+                    {visibilities.map((visibility, i) => (
+                      <li
+                        className="rounded-md p-2  flex items-center  text-primary  pt-1 bg-base-200 hover:bg-gray-800 "
+                        key={i}
+                        onClick={() => handleSelectedType(visibility.type)}
+                      >
+                        <p className="flex items-center justify-around gap-x-10">
+                          {visibility.type}
+                          <span className="text-gray-500">
+                            {visibility.icon}
+                          </span>
+                        </p>
+                        {/* <span className="badge badge-accent ml-2 text-xs">
+                          {project.active ? "active" : ""}
+                        </span> */}
                       </li>
                     ))}
                   </ul>
@@ -202,11 +216,11 @@ const SideBar = ({ onProjectSelect }: SideBarProps) => {
                 <span
                   className={`${!open && "hidden"} origin-left duration-200`}
                 >
-                  <h1 className="text-white font-medium ml-2 mr-2 text-xl">
+                  <h1 className="text-white font-medium ml-2 mr-2 text-sm">
                     {Menu.title}
                   </h1>
                 </span>
-                <span>hello</span>
+                {/* <span>hello</span> */}
                 {Menu.title === "Received Invites" ? (
                   <span className="flex h-3 w-3">
                     <span className="animate-ping absolute object-cover inline-flex h-3 w-3 rounded-full bg-sky-400 opacity-75"></span>

@@ -45,7 +45,7 @@ class Project(models.Model):
 
     title = models.CharField(max_length=255)
     description = models.TextField()
-    creator = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
+    creator = models.ForeignKey(Artist, on_delete=models.CASCADE , related_name='project_creator')
     active = models.BooleanField(default=True)
     created_at = models.DateTimeField(auto_now_add=True)
     visibility = models.CharField(max_length=10, choices=VISIBILITY_CHOICES, default=PUBLIC)
@@ -60,7 +60,7 @@ class Project(models.Model):
         return self.title  
 
 class Collaborator(models.Model):
-    artist = models.ForeignKey(Artist, on_delete=models.CASCADE)
+    artist = models.ForeignKey(Artist, on_delete=models.CASCADE , related_name="collaborator_atist")
     project = models.ForeignKey(Project, on_delete=models.CASCADE)
 
     class Meta:
@@ -73,7 +73,7 @@ class Artwork(models.Model):
     description = models.TextField()
     artist = models.CharField(max_length=50)
     project = models.OneToOneField(Project, on_delete=models.DO_NOTHING, null=True, blank=True)
-    created_at = models.DateTimeField(auto_now_add=True)
+    created_at = models.DateTimeField(auto_now_add=True , null=True) # 
     price = models.DecimalField(max_digits=10, decimal_places=2)
     collection = models.ForeignKey(
     Collection, on_delete=models.PROTECT, null=True, related_name='artworks')
@@ -88,4 +88,9 @@ class Bid(models.Model):
     user = models.ForeignKey(settings.AUTH_USER_MODEL , on_delete=models.CASCADE)
     artwork = models.ForeignKey(Artwork , on_delete=models.CASCADE , related_name='bidded_artwork')
     amount = models.DecimalField(max_digits=10, decimal_places=2)
-
+    
+class Buyer(models.Model):
+    buyer = models.ForeignKey(settings.AUTH_USER_MODEL , on_delete=models.CASCADE)
+    artwork = models.ForeignKey(Artwork , on_delete=models.CASCADE , related_name='bought_artwork')
+    amount = models.DecimalField(max_digits=10, decimal_places=2)
+    

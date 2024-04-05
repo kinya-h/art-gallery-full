@@ -4,29 +4,28 @@ import { RootState } from "../store";
 import { useEffect, useState } from "react";
 import { useAppDispatch } from "../lib/hooks";
 import { fetchArtists, getCurrentArtist } from "../actions/artist-service";
-import ArtistsProfile from "../ArtistsProfile";
+import ArtistsProfile from "../components/ArtistsProfile";
 import ApplyForArtistRoleAlert from "../components/ApplyForArtistRoleAlert";
 import ArtistBioForm from "../components/ArtistBioForm";
 import SideBar from "../components/SideBar";
 import { Project } from "../types/Project";
-import ProjectDetails from "../components/ProjectDetails";
+import ProjectList from "../components/ProjectList";
+import { motion as m } from "framer-motion";
 
 const Profile = () => {
   const { user } = useSelector((state: RootState) => state.authenticatedUser);
-  const { artists } = useSelector((state: RootState) => state.artists);
+  const { userBiddings } = useSelector(
+    (state: RootState) => state.userBiddings
+  );
   const { artist, success } = useSelector(
     (state: RootState) => state.currentAartist
   );
+  const { projects } = useSelector((state: RootState) => state.projectList);
+
   const [openAlert, setOpenAlert] = useState(false);
   const [apply, setApply] = useState(false);
-  const [showSelectedProject, setShowSelectedProject] = useState(false);
-  const [selectedProject, setSelectedProject] = useState<Project>({
-    title: "",
-    description: "",
-    creator: { id: 0, username: "", email: "" },
-    created_at: "",
-    active: false,
-  });
+  const [showSelectedProjects, setShowSelectedProjects] = useState(false);
+  const [selectedProjects, setSelectedProjects] = useState<Project[]>([]);
 
   const dispatch = useAppDispatch();
 
@@ -35,9 +34,20 @@ const Profile = () => {
       await dispatch(fetchArtists());
       await dispatch(getCurrentArtist());
 
-      if (success && Object.keys(artist).length === 0) {
-        setOpenAlert(true);
+      if (typeof artist !== "undefined") {
+        if (success && Object.keys(artist).length === 0) {
+          setOpenAlert(true);
+        }
+
+        // if (typeof (artist) !== 'undefined') {
       }
+      //   if (success && artist.length === 0) {
+      //     setOpenAlert(true);
+      //   }
+
+      // }
+
+      // setOpenAlert(true);
     };
 
     fetchData();
@@ -51,22 +61,23 @@ const Profile = () => {
     setOpenAlert(false);
   };
 
-  const showProjectDetails = (project: Project) => {
-    setSelectedProject(project);
-    setShowSelectedProject(true);
+  const handleSelectedVisibity = (visibility: string) => {
+    setShowSelectedProjects(true);
+    setSelectedProjects(
+      projects.filter((project: Project) => project.visibility === visibility)
+    );
   };
 
-  // console.log("CURRENT ARTIST => ", artist[0].user);
   return (
     <div className="mt-20 flex relative xs:overflow-scroll">
-      <SideBar onProjectSelect={showProjectDetails} />
+      <SideBar onSelectedVisibility={handleSelectedVisibity} />
       <main className="flex-1 w-full">
-        <div className="flex flex-wrap justify-between items-center">
+        <div className="flex ml-12 flex-wrap justify-between items-center">
           <div>
-            <h3 className="text-info font-semibold text-2xl">
+            <h3 className="flex items-center gap-x-2 justify-center text-info font-semibold text-2xl">
               Hello{" "}
               {user && artist?.user?.username ? (
-                <span className="badge badge-primary">
+                <span className="badge badge-primary mt-2">
                   {artist?.user?.username}
                 </span>
               ) : (
@@ -85,11 +96,27 @@ const Profile = () => {
         {apply && openAlert && <ArtistBioForm onClose={closeAlert} />}
 
         <ArtistsProfile />
-        {showSelectedProject && <ProjectDetails project={selectedProject} />}
-        <p>Here are the artworks you have bidded so far:</p>
-        <div className="mt-20">
-          <UserBiddings />
-        </div>
+        {/* {showSelectedProject && <ProjectDetails project={selectedProject} />} */}
+        {showSelectedProjects && (
+          <m.div
+            initial={{ x: "-100vw" }}
+            animate={{ x: 0 }}
+            transition={{ duration: 0.5 }}
+          >
+            <ProjectList projects={selectedProjects} />
+          </m.div>
+        )}
+
+        {userBiddings.length > 0 ? (
+          <div>
+            <p>Here are the artworks you have bidded so far:</p>
+            <div className="mt-20">
+              <UserBiddings />
+            </div>
+          </div>
+        ) : (
+          ""
+        )}
       </main>
     </div>
   );

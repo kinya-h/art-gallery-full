@@ -10,6 +10,7 @@ const Login = () => {
   const { loading } = useSelector((state: RootState) => state.tokens);
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
+  
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
 
@@ -17,7 +18,7 @@ const Login = () => {
     event.preventDefault();
     const payload = await dispatch(loginUser({ username, password }));
     if (payload.type === "user/login/fulfilled") {
-      // dispatch(getUser()); //load and initialize the user
+      dispatch(getUser()); //load and initialize the user
       navigate("/home");
     }
   };

@@ -5,24 +5,23 @@ import { RootState } from "../store";
 import { createArtistAccount } from "../actions/artist-service";
 import { User } from "../types/User";
 import Loader from "./Loader";
-import { GiCheckMark } from "react-icons/gi";
 import { ImCross } from "react-icons/im";
 import { getUser } from "../actions/userActions";
 import { FaCheck } from "react-icons/fa";
 
 interface ArtistBioFormProps {
   onClose: () => void;
+  onSubmit?: () => void;
 }
 
-const ArtistBioForm = ({ onClose }: ArtistBioFormProps) => {
+const ArtistBioForm = ({ onClose, onSubmit }: ArtistBioFormProps) => {
   const [bio, setBio] = useState("");
   const [contactInfo, setContactInfo] = useState("");
   const [success, setSuccess] = useState(false);
 
-  const { loading, artist, error } = useSelector(
-    (state: RootState) => state.currentAartist
-  );
+  const { error } = useSelector((state: RootState) => state.currentAartist);
   const { user } = useSelector((state: RootState) => state.authenticatedUser);
+  const { loading } = useSelector((state: RootState) => state.artists);
   const dispatch = useAppDispatch();
 
   useEffect(() => {
@@ -39,6 +38,7 @@ const ArtistBioForm = ({ onClose }: ArtistBioFormProps) => {
     if (response.type === "artist/create/fulfilled") {
       setSuccess(true);
       onClose();
+      onSubmit?.();
     }
   };
 

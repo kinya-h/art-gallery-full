@@ -3,7 +3,7 @@ from django.db.models.aggregates import Count
 from django.db.models.query import QuerySet
 from django.utils.html import format_html, urlencode
 from django.urls import reverse
-from .models import Artwork,Bid ,Collection,Artist , Project , Collaborator
+from .models import Artwork,Bid ,Buyer , Collection,Artist , Project , Collaborator
 
 # class WalletInline(admin.TabularInline):
 #     model = Wallet
@@ -45,9 +45,16 @@ class BidAdmin(admin.ModelAdmin):
         return bid.artwork.title
 
     artwork_title.short_description = 'artwork'
+
+@admin.register(Buyer)
+class BuyerAdmin(admin.ModelAdmin):
+    list_display = ('id', 'buyer', 'artwork_title', 'amount')
+    search_fields = ('buyer__username', 'artwork__title')
     
     
-    
+    def artwork_title(self,buyer):
+        return buyer.artwork.title
+
     
 @admin.register(Artist)
 class ArtistAdmin(admin.ModelAdmin):
