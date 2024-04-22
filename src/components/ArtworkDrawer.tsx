@@ -7,6 +7,9 @@ import { RootState } from "../store";
 import { User } from "../types/User";
 import Loader from "./Loader";
 import { motion as m } from "framer-motion";
+import { purhcaseArtwork } from "../actions/purchase-service";
+import { getUser } from "../actions/userActions";
+import { useNavigate } from "react-router-dom";
 
 interface artworkDrawerProps {
   isOpen: boolean;
@@ -17,10 +20,14 @@ const ArtworkDrawer = ({ isOpen, onClose, artwork }: artworkDrawerProps) => {
   const [isBidding, setIsBidding] = useState(false);
   const dispatch = useAppDispatch();
   const [amount, setAmount] = useState("");
+  const [purchaseAmount, setPurchaseAmount] = useState("");
+const navigate = useNavigate()
 
+const [isBuying , setIsBuying] = useState(false);
   const { user } = useSelector((state: RootState) => state.authenticatedUser);
   const { loading } = useSelector((state: RootState) => state.biddingList);
   useEffect(() => {
+    dispatch(getUser());
     const handleOutsideClick = (event: any) => {
       if (isOpen && event.target.classList.contains("drawer-toggle")) {
         onClose();
@@ -44,10 +51,21 @@ const ArtworkDrawer = ({ isOpen, onClose, artwork }: artworkDrawerProps) => {
       bidArtwork({
         userId: (user as User).id,
         artworkId: artwork.id,
-        amount: +amount,
+        amount: +purchaseAmount,
       })
     );
     setAmount("");
+  };
+
+
+const handleBuying = async (e: React.FormEvent) => {
+    e.preventDefault();
+    const response = await dispatch(
+      purhcaseArtwork({buyerUserId: (user as User).id , artworkId:artwork.id , amount: +purchaseAmount })
+    );
+    setAmount("");
+
+    if (response.type === 'purchase/create/fulfilled') navigate("/purchases")
   };
 
   return (
@@ -86,8 +104,49 @@ const ArtworkDrawer = ({ isOpen, onClose, artwork }: artworkDrawerProps) => {
               <h2 className="font-bold text-2xl text-black">
                 ${artwork.price}
               </h2>
+
               <div className="stat-actions">
-                <button className="btn btn-sm btn-success">Buy</button>
+
+
+              {isBuying && (
+                  <form action="" onSubmit={(e) => handleBuying(e)}>
+                    <div className="flex items-center justify-center top-2">
+                      {loading && <Loader />}
+                    </div>
+                    <label className="form-control">
+                      <div className="contact info">
+                        <span className="label-text">Amount</span>
+                      </div>
+                      <input
+                        type="number"
+                        value={purchaseAmount}
+                        placeholder="Purchase Amount"
+                        className="input text-white input-bordered input-sm input-info w-full max-w-xs"
+                        onChange={(e) => setPurchaseAmount(e.target.value)}
+                      />
+                    </label>
+
+                    <div className="flex ">
+                      <div className="form-control ml-auto">
+                        <button
+                          className="btn btn-sm mt-2  btn-accent"
+                          type="submit"
+                        >
+                          Buy
+                        </button>
+                      </div>
+                    </div>
+                  </form>
+                )}
+                <button
+                  className={`btn btn-sm ${isBuying && "hidden"}`}
+                  onClick={() => setIsBuying(true)}
+                >
+                  Buy
+                </button>
+
+
+
               </div>
             </div>
 

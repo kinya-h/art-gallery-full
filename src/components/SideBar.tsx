@@ -30,7 +30,7 @@ const SideBar = ({ onSelectedVisibility }: SideBarProps) => {
     navigate("/add/event");
   };
   const handleUsers = () => {
-    navigate("/users");
+    navigate("/artists/forum");
   };
 
   // const logoutUser = () => {

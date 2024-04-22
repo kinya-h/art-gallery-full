@@ -102,14 +102,14 @@ const NavBar = () => {
               </li>
 
               {/* Admin */}
-              <li onClick={closeMenu}>
-                <Link
+              {/* <li onClick={closeMenu}>
+                <a
                   to="/admin"
                   className="block py-2 pl-3 pr-4 text-white rounded hover:bg-gray-700  sm:hover:text-blue-700 md:hover:text-blue-700 md:p-0 dark:text-white-mode md:dark:hover:text-blue-500 dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent"
                 >
                   Admin
-                </Link>
-              </li>
+                </a>
+              </li> */}
 
               {/* Contacts */}
               {/* <li onClick={closeMenu}>

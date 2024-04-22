@@ -13,6 +13,6 @@ router.register('follows', views.FollowViewSet, basename='follows')
 router.register('projects', views.ProjectViewSet, basename='projects')
 router.register('collaborators', views.CollaboratorViewSet, basename='collaborators')
 router.register('collections', views.CollectionViewSet, basename='collections')
-router.register('buyers', views.BuyerVieSet, basename='buyers')
+router.register('purchases', views.BuyerVieSet, basename='purchases')
 
 urlpatterns = router.urls 

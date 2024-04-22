@@ -14,6 +14,7 @@ import {
   artistCollabProjectsSlice,
   projectSlice,
 } from "./features/project/projectSlice";
+import { buySlice, purchaseSlice } from "./features/buy/buySlice";
 
 const reducer = combineReducers({
   biddingList: bidSlice.reducer,
@@ -28,6 +29,8 @@ const reducer = combineReducers({
   projectCollaborators: CollaborateSlice.reducer,
   artistCollabProjectsList: artistCollabProjectsSlice.reducer,
   artworkCollections: collectionSlice.reducer,
+  purchasedArtworks: buySlice.reducer,
+  allpurchasedArtworks: purchaseSlice.reducer,
 });
 
 export const store = configureStore({

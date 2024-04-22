@@ -26,13 +26,14 @@ SECRET_KEY = 'django-insecure-rcta!6p-w@7rd8jwweg$z&o1cv^y!ts)%cv)fv3@*&2u_l_m8-
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = [".vercel.app" , 'http://localhost:5173' , 'http://127.0.0.1:5173' , '.onrender.com']
+# ALLOWED_HOSTS = [".vercel.app" , 'http://localhost:5173' , 'http://127.0.0.1:5173' , '.onrender.com' , 'localhost' 'http://localhost:8000']
+ALLOWED_HOSTS = ['*']
 
 
 CORS_ORIGIN_ALLOW_ALL = True
 CORS_ALLOW_CREDENTIALS = True
 CORS_ALLOWED_ORIGINS = [
-    ".vercel.app" , 'http://localhost:5173' , 'https://art-gallery-e4zt.onrender.com'
+    'http://localhost:5173' , 'https://art-gallery-e4zt.onrender.com' , 'http://localhost:8000'
 ]
 
 INTERNAL_IPS = [

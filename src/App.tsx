@@ -20,6 +20,8 @@ import Docs from "./pages/Docs";
 import ArtistSignUp from "./pages/ArtistSignUp";
 import { useEffect, useState } from "react";
 import {socket} from './socket';
+import Forum from "./pages/Forum";
+import PurchasePage from "./pages/PurchasePage";
 
 const router = createBrowserRouter(
   createRoutesFromElements(
@@ -51,6 +53,8 @@ const router = createBrowserRouter(
       <Route path="profile" element={<Profile />} />
       <Route path="docs" element={<Docs />} />
       <Route path="artist-onboard" element={<ArtistSignUp />} />
+      <Route path="artists/forum" element={<Forum />} />
+      <Route path="purchases" element={<PurchasePage />} />
     </Route>
   )
 );

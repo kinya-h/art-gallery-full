@@ -35,7 +35,7 @@ export const fetchArtworks = createAsyncThunk<Artwork[]>(
   async () => {
     const response = await axios.get(`${API_URL}/api/artworks/`);
 
-    console.log("Artworks:: ", response.data);
+    console.log("Artworks:: from the backend", response.data);
     return response.data as Artwork[];
   }
 );
