@@ -26,14 +26,16 @@ SECRET_KEY = 'django-insecure-rcta!6p-w@7rd8jwweg$z&o1cv^y!ts)%cv)fv3@*&2u_l_m8-
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = [".vercel.app" , 'http://localhost:5173' , 'http://127.0.0.1:5173' , '.onrender.com']
+# ALLOWED_HOSTS = [".vercel.app" , 'http://localhost:5173' , 'http://127.0.0.1:5173' , '.onrender.com']
+ALLOWE_HOSTS = ['*']
 
 
 CORS_ORIGIN_ALLOW_ALL = True
 CORS_ALLOW_CREDENTIALS = True
-CORS_ALLOWED_ORIGINS = [
-    ".vercel.app" , 'http://localhost:5173' , 'https://art-gallery-e4zt.onrender.com'
-]
+CORS_ALLOWED_ORIGINS = ['http://localhost:5173']
+# CORS_ALLOWED_ORIGINS = [
+#     ".vercel.app" , 'http://localhost:5173' , 'https://art-gallery-e4zt.onrender.com'
+# ]
 
 INTERNAL_IPS = [
     # ...
@@ -135,9 +137,9 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/4.2/howto/static-files/
 
 STATIC_URL = 'assets/'
-STATICFILES_DIRS = [
-    os.path.join(BASE_DIR, 'dist/assets'),
-]
+# STATICFILES_DIRS = [
+#     os.path.join(BASE_DIR, 'dist/assets'),
+# ]
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.2/ref/settings/#default-auto-field
 

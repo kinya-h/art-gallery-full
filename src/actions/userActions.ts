@@ -53,6 +53,14 @@ export const getUser = createAsyncThunk<User>("user/fetch", async () => {
   return response.data as User;
 });
 
+export const logoutUser = createAsyncThunk("user/logout" , async ()=>{
+  if (typeof window !== "undefined") {
+    localStorage.removeItem("tokens");
+
+  }
+  
+})
+
 // export const fetchUserData =
 //   (accessToken: string) => async (dispatch: Dispatch) => {
 //     axiosInstance

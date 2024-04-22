@@ -73,7 +73,6 @@ const Home = () => {
 
   const handleOpenDrawer = (artwork: Artwork) => {
     // setIsDrawerOpen(!isDrawerOpen);
-    console.log("SELECTED ARTWORK ==== ", artwork);
     setIsDrawerOpen((prevIsDrawerOpen) => !prevIsDrawerOpen);
 
     setArtworkToView(artwork);
