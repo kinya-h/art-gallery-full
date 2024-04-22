@@ -59,13 +59,7 @@ const SimpleProjectDetails = ({ project }: ProjectDetailsProps) => {
   };
   const handleSubmitArtwork = async (e: React.FormEvent) => {
     e.preventDefault();
-    // title,
-    //   imageSrc,
-    //   description,
-    //   artist,
-    //   created_at,
-    //   price,
-    //   category,
+   console.log("ARTWORK BEING SUBMITTED")
 
     console.log({
       title: artworkTitle,
@@ -253,8 +247,8 @@ const SimpleProjectDetails = ({ project }: ProjectDetailsProps) => {
             </label>
             <div className="flex ">
               <div className="form-control ml-auto">
-                <button className="btn btn-sm mt-2  btn-primary" type="submit">
-                  Submit
+                <button className="btn btn-sm mt-2  btn-primary" type="submit" onClick={handleSubmitArtwork}>
+                  Submit 
                 </button>
               </div>
             </div>

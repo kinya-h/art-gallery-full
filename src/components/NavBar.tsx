@@ -1,25 +1,36 @@
 import React, { useState, useEffect } from "react";
 import { divider, logo } from "../../public/assets";
-import { Link, useLocation } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import { RiMenuLine } from "react-icons/ri";
 import { BiChevronUp } from "react-icons/bi";
 import ClickAwayListener from "@mui/material/ClickAwayListener";
 import Avatar from "./Avatar";
+import { useSelector } from "react-redux";
+import { RootState } from "../store";
+import { useAppDispatch } from "../lib/hooks";
+import { logOut } from "../features/login/loginSlice";
+import { getUser, logoutUser } from "../actions/userActions";
 
 const NavBar = () => {
   const location = useLocation();
+  const {user} = useSelector((state:RootState)=>state.authenticatedUser)
   const { pathname } = location;
   /* */
+
+
   // const currentPathname = window.location.pathname;
 
   const [isMenuOpen, setMenuOpen] = useState(false);
   const [theme, setTheme] = useState("night");
-
+  const dispatch = useAppDispatch()
+  const navigate = useNavigate();
   const toggleTheme = () => {
     setTheme(theme === "night" ? "coffee" : "night");
   };
 
   useEffect(() => {
+
+    dispatch(getUser());
     if (document) {
       if (document) {
         document.querySelector("html")!.setAttribute("data-theme", theme);
@@ -31,9 +42,19 @@ const NavBar = () => {
     setMenuOpen(false);
   };
 
+  console.log("USER  ==> " , user)
+
   const toggleMenu = () => {
     setMenuOpen(!isMenuOpen);
   };
+
+const handleLogout = async()=>{
+  await dispatch(logoutUser());
+ await  dispatch(logOut());
+
+  await dispatch(getUser())
+  navigate("/");
+}
 
   const closeMenu = (e: React.FormEvent) => {
     e.preventDefault();
@@ -103,12 +124,12 @@ const NavBar = () => {
 
               {/* Admin */}
               {/* <li onClick={closeMenu}>
-                <a
+                <Link
                   to="/admin"
                   className="block py-2 pl-3 pr-4 text-white rounded hover:bg-gray-700  sm:hover:text-blue-700 md:hover:text-blue-700 md:p-0 dark:text-white-mode md:dark:hover:text-blue-500 dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent"
                 >
                   Admin
-                </a>
+                </Link>
               </li> */}
 
               {/* Contacts */}
@@ -127,26 +148,28 @@ const NavBar = () => {
                 </div>
               </li>
 
-              {/* Login */}
-              <li onClick={closeMenu}>
-                <Link
-                  to="/login"
-                  className="block py-2 pl-3 pr-4 text-white rounded hover:bg-gray-700  sm:hover:text-blue-700 md:hover:text-blue-700 md:p-0 dark:text-white-mode md:dark:hover:text-blue-500 dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent"
-                >
-                  Login
-                </Link>
-              </li>
+                      {Object.keys(user).length === 0 && (
+                        <li onClick={closeMenu}>
+                        <Link
+                          to="/login"
+                          className="block py-2 pl-3 pr-4 text-white rounded hover:bg-gray-700  sm:hover:text-blue-700 md:hover:text-blue-700 md:p-0 dark:text-white-mode md:dark:hover:text-blue-500 dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent"
+                        >
+                          Login
+                        </Link>
+                        </li>
+                            )}
+                            
 
-              {/* Register */}
-              <li onClick={closeMenu}>
-                <Link
-                  to="/Register"
-                  className="block py-2 pl-3 pr-4 text-white rounded hover:bg-gray-700  sm:hover:text-blue-700 md:hover:text-blue-700 md:p-0 dark:text-white-mode md:dark:hover:text-blue-500 dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent"
-                >
-                  Register
-                </Link>
-              </li>
-
+                {Object.keys(user).length === 0 && ( <li onClick={closeMenu}>
+                  <Link
+                    to="/Register"
+                    className="block py-2 pl-3 pr-4 text-white rounded hover:bg-gray-700  sm:hover:text-blue-700 md:hover:text-blue-700 md:p-0 dark:text-white-mode md:dark:hover:text-blue-500 dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent"
+                  >
+                    Register
+                  </Link>
+                </li>)}
+               
+           
               <li>
                 <label className="flex cursor-pointer gap-2">
                   <svg
@@ -184,11 +207,20 @@ const NavBar = () => {
                   </svg>
                 </label>
               </li>
-              <li>
+
+              {Object.keys(user).length >.0 && (
+                <li>
                 <Link to="/profile">
                   <Avatar />
                 </Link>
               </li>
+              )}
+
+              {Object.keys(user).length > 0 && (
+                <li>
+                <div className="badge badge-accent badge-outline" onClick={handleLogout}>logout</div>
+              </li>
+              )}
             </ul>
           </div>
         </div>

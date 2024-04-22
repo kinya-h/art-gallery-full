@@ -29,12 +29,12 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     
    
-    path('login/', ReactAppView.as_view(), name='react-app-login'),
-    path('register/', ReactAppView.as_view(), name='react-app-register'),
-    path('home/', ReactAppView.as_view(), name='react-app-home'),
-    path('about/', ReactAppView.as_view(), name='react-app-about'),
-    path('profile/', ReactAppView.as_view(), name='react-app-profile'),
-    path('artist-onboard/', ReactAppView.as_view(), name='react-app-artist-onboard'),
+    # path('login/', ReactAppView.as_view(), name='react-app-login'),
+    # path('register/', ReactAppView.as_view(), name='react-app-register'),
+    # path('home/', ReactAppView.as_view(), name='react-app-home'),
+    # path('about/', ReactAppView.as_view(), name='react-app-about'),
+    # path('profile/', ReactAppView.as_view(), name='react-app-profile'),
+    # path('artist-onboard/', ReactAppView.as_view(), name='react-app-artist-onboard'),
     path('api/', include('gallery.urls')),
      path('auth/', include('djoser.urls')),
     path('auth/', include('djoser.urls.jwt')),

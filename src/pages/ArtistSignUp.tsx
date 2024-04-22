@@ -1,4 +1,4 @@
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import React, { useState } from "react";
 import { getUser, loginUser, signUpUser } from "../actions/userActions";
 import { useAppDispatch } from "../lib/hooks";
@@ -20,7 +20,7 @@ const ArtistSignUp = () => {
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
   const [stage, setStage] = useState(0);
-
+const navigate = useNavigate();
   const handleSignUp = async (event: React.FormEvent) => {
     event.preventDefault();
     if (password === confirmPassword) {
@@ -29,8 +29,12 @@ const ArtistSignUp = () => {
       );
       if (response.type === "auth/registerUser/fulfilled") {
         setStage((prevStage) => prevStage + 1);
-        await dispatch(loginUser({ username, password }));
+        const loginResponse = await dispatch(loginUser({ username, password }));
         await dispatch(getUser());
+        if (loginResponse.type === 'user/login/fulfilled'){
+          navigate('/home')
+          
+        }
       }
     }
   };

@@ -1,5 +1,5 @@
 import { Link, useNavigate } from "react-router-dom";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useAppDispatch } from "../lib/hooks";
 import { getUser, loginUser } from "../actions/userActions";
 import { useSelector } from "react-redux";
@@ -8,11 +8,16 @@ import Loader from "../components/Loader";
 
 const Login = () => {
   const { loading } = useSelector((state: RootState) => state.tokens);
+  const {user} = useSelector((state:RootState)=>state.authenticatedUser)
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
   
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
+
+  useEffect(()=>{
+    dispatch(getUser());
+  },[])
 
   const handleLogin = async (event: React.FormEvent) => {
     event.preventDefault();

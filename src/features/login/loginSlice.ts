@@ -1,5 +1,5 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { getUser, signIn, signUpUser } from "../../actions/userActions";
+import { getUser, logoutUser, signIn, signUpUser } from "../../actions/userActions";
 import { Token } from "../../types/Token";
 import { User } from "../../types/User";
 
@@ -177,7 +177,15 @@ export const userDetailsSlice = createSlice({
     success: false,
     error: "",
   } as UserDetailsState,
-  reducers: {},
+  reducers: {
+    logOut: (state) => {
+      if (typeof window !== "undefined") {
+        localStorage.removeItem("tokens");
+      }
+      state.user = {} as User;
+
+    },
+  },
   extraReducers: (builder) => {
     builder
       .addCase(getUser.pending, (state) => {
@@ -191,7 +199,10 @@ export const userDetailsSlice = createSlice({
       .addCase(getUser.rejected, (state, action) => {
         state.loading = false;
         state.error = action.error;
-      });
+      }).addCase(logoutUser.fulfilled, (state)=>{
+        state.user = {}  as User;
+      })
+      
   },
 });
 
@@ -215,7 +226,7 @@ const usersSlice = createSlice({
       state.error = action.payload;
     },
   },
-});
+})
 
 const userUpdateProfileSlice = createSlice({
   name: "userUpdateProfile",
