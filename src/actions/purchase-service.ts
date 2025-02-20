@@ -18,6 +18,7 @@ export const purhcaseArtwork = createAsyncThunk<
   return response.data as PurchaseInfo;
 });
 
+
 export const fetchPurchasedArtworks = createAsyncThunk<PurchaseInfo[]>(
   "purchases/fetch",
   async () => {
@@ -26,6 +27,7 @@ export const fetchPurchasedArtworks = createAsyncThunk<PurchaseInfo[]>(
     return response.data as PurchaseInfo[];
   }
 );
+
 
 export const fetchUserPurchases = createAsyncThunk<Bid[]>(
   "purchases/fetch",

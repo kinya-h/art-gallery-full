@@ -70,9 +70,18 @@ const Forum = () => {
 
   return (
     <div className="flex justify-center items-center h-screen">
-      <div className=" rounded-lg shadow-lg p-6 w-full max-w-md">
+
+
+<div className="mockup-phone">
+  <div className="camera"></div> 
+  <div className="display">
+    <div className="artboard artboard-demo phone-1">
+
+
+
+    <div className=" rounded-lg shadow-lg p-6 w-full max-w-md">
         <div className="flex justify-between items-center mb-4">
-          <h2 className="text-xl font-bold">Chat</h2>
+          <h2 className="text-xl font-bold">Discussion</h2>
         </div>
         <div className="overflow-y-auto max-h-96 chat-container">
           {chatMessages.map((message, index) => (
@@ -113,10 +122,18 @@ const Forum = () => {
     onClick={handleSendMessage}
     className="text-white bg-green-400 rounded-full p-1 hover:bg-blue-600 transition-colors duration-300 ml-2"
   >
-    <MdSend size={24}/>
+    submit
   </button>
 </div>
       </div>
+
+
+
+    </div>
+  </div>
+</div>
+
+
     </div>
   );
 };

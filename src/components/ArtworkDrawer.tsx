@@ -21,9 +21,9 @@ const ArtworkDrawer = ({ isOpen, onClose, artwork }: artworkDrawerProps) => {
   const dispatch = useAppDispatch();
   const [amount, setAmount] = useState("");
   const [purchaseAmount, setPurchaseAmount] = useState("");
-const navigate = useNavigate()
+  const navigate = useNavigate();
 
-const [isBuying , setIsBuying] = useState(false);
+  const [isBuying, setIsBuying] = useState(false);
   const { user } = useSelector((state: RootState) => state.authenticatedUser);
   const { loading } = useSelector((state: RootState) => state.biddingList);
   useEffect(() => {
@@ -51,21 +51,25 @@ const [isBuying , setIsBuying] = useState(false);
       bidArtwork({
         userId: (user as User).id,
         artworkId: artwork.id,
-        amount: +purchaseAmount,
+        amount: +amount,
       })
     );
     setAmount("");
   };
 
-
-const handleBuying = async (e: React.FormEvent) => {
+  console.log("Purchase Amount", purchaseAmount);
+  const handleBuying = async (e: React.FormEvent) => {
     e.preventDefault();
     const response = await dispatch(
-      purhcaseArtwork({buyerUserId: (user as User).id , artworkId:artwork.id , amount: +purchaseAmount })
+      purhcaseArtwork({
+        buyerUserId: (user as User).id,
+        artworkId: artwork.id,
+        amount: +purchaseAmount,
+      })
     );
     setAmount("");
 
-    if (response.type === 'purchase/create/fulfilled') navigate("/purchases")
+    if (response.type === "purchase/create/fulfilled") navigate("/purchases");
   };
 
   return (
@@ -106,9 +110,7 @@ const handleBuying = async (e: React.FormEvent) => {
               </h2>
 
               <div className="stat-actions">
-
-
-              {isBuying && (
+                {isBuying && (
                   <form action="" onSubmit={(e) => handleBuying(e)}>
                     <div className="flex items-center justify-center top-2">
                       {loading && <Loader />}
@@ -144,9 +146,6 @@ const handleBuying = async (e: React.FormEvent) => {
                 >
                   Buy
                 </button>
-
-
-
               </div>
             </div>
 

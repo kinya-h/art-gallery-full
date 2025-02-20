@@ -71,7 +71,7 @@ const SubNavbar = ({ onSelectCategory, onSearchArtworks }: subNavbarProps) => {
       </div>
       <div className="flex gap-x-2">
         <div className="navbar-center">
-          <a className="btn btn-ghost text-xl">Martoh</a>
+          <a className="btn btn-ghost text-xl">Gallery</a>
         </div>
         <Search onSearchArtworks={handleSearchArtwork} />
         <div className="navbar-end">

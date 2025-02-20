@@ -11,9 +11,29 @@ import painting_man from "./data/painting_man.jpg";
 import wolf from "./data/wolf.jpg";
 import zebra from "./data/zebra.jpg";
 import logo from "./logo.svg";
+import sprofile from "./sprofile.png";
+
+import dis from "./dis.png";
+import exs from "./exs.png";
+import ex from "./ex.png";
+import exstart from "./exstart.png";
+import prof from "./prof.png";
+import reg from "./reg.png";
+import log from "./log.png";
 
 export {
+
+  dis,
+  exs,
+  ex,
+  exstart,
+  prof,
+  reg,
+  log,
+
+  
   divider,
+  sprofile,
   hero,
   wolf,
   monalisa,

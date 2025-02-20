@@ -9,10 +9,10 @@ const Footer = () => {
             <img src={logo} className="h-16 w-16 mr-3" alt="Artbid Connect" />
           </div>
           <p>
-            Martin Njihia.
+            VVDKH.
             <br />
             Copyright &copy; 2024{" "}
-            <span className="text-gray-500 font-semibold"> Martin Njihia.</span>
+            <span className="text-gray-500 font-semibold"> VVDKH.</span>
           </p>
         </aside>
         <nav>

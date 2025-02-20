@@ -19,7 +19,7 @@ import Profile from "./pages/Profile";
 import Docs from "./pages/Docs";
 import ArtistSignUp from "./pages/ArtistSignUp";
 import { useEffect, useState } from "react";
-import {socket} from './socket';
+import { socket } from "./socket";
 import Forum from "./pages/Forum";
 import PurchasePage from "./pages/PurchasePage";
 
@@ -60,12 +60,9 @@ const router = createBrowserRouter(
 );
 
 function App() {
-
-
   const [isConnected, setIsConnected] = useState(socket.connected);
   const [fooEvents, setFooEvents] = useState([]);
 
-  
   useEffect(() => {
     function onConnect() {
       setIsConnected(true);
@@ -79,13 +76,13 @@ function App() {
     //   setFooEvents(previous => [...previous, value]);
     // }
 
-    socket.on('connect', onConnect);
-    socket.on('disconnect', onDisconnect);
+    socket.on("connect", onConnect);
+    socket.on("disconnect", onDisconnect);
     // socket.on('foo', onFooEvent);
 
     return () => {
-      socket.off('connect', onConnect);
-      socket.off('disconnect', onDisconnect);
+      socket.off("connect", onConnect);
+      socket.off("disconnect", onDisconnect);
       // socket.off('foo', onFooEvent);
     };
   }, []);
