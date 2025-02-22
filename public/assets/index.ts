@@ -20,6 +20,7 @@ import exstart from "./exstart.png";
 import prof from "./prof.png";
 import reg from "./reg.png";
 import log from "./log.png";
+import aboutbanner from './about-banner.png';
 
 export {
 
@@ -27,6 +28,7 @@ export {
   exs,
   ex,
   exstart,
+  aboutbanner,
   prof,
   reg,
   log,
