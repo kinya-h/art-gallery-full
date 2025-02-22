@@ -8,16 +8,16 @@ import Loader from "../components/Loader";
 
 const Login = () => {
   const { loading } = useSelector((state: RootState) => state.tokens);
-  const {user} = useSelector((state:RootState)=>state.authenticatedUser)
+  const { user } = useSelector((state: RootState) => state.authenticatedUser);
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
-  
+
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
 
-  useEffect(()=>{
+  useEffect(() => {
     dispatch(getUser());
-  },[])
+  }, []);
 
   const handleLogin = async (event: React.FormEvent) => {
     event.preventDefault();
@@ -30,13 +30,7 @@ const Login = () => {
 
   return (
     <div className="mt-20">
-
       <div className="hero min-h-screen  bg-base-200">
-
-      <div className="mt-24 mockup-window border border-blue-500">
-  <div className="flex justify-center  border-t border-blue-500">
-
-
         <div className="hero-content xs:flex-col flex-col lg:flex-row">
           <div className="text-center justify-center lg:text-left">
             <div className="text-center justify-center mb-2">
@@ -51,7 +45,11 @@ const Login = () => {
               beauty of human expression.
             </p> */}
 
-            <img src="https://images.unsplash.com/photo-1515787366009-7cbdd2dc587b?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Nnx8ZXhhbXxlbnwwfHwwfHx8MA%3D%3D" alt=""  className="rounded-md"/>
+            <img
+              src="https://images.unsplash.com/photo-1515787366009-7cbdd2dc587b?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Nnx8ZXhhbXxlbnwwfHwwfHx8MA%3D%3D"
+              alt=""
+              className=""
+            />
           </div>
           <div className="card w-full lg:w-1/2 max-w-sm shadow-2xl bg-base-100 mt-4 lg:mt-0">
             <form
@@ -102,8 +100,6 @@ const Login = () => {
               </label>
             </form>
           </div>
-        </div>
-        </div>
         </div>
       </div>
     </div>
