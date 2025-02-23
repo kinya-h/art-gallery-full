@@ -12,7 +12,7 @@ const About = () => {
       </div>
       <div className="divider"></div>
 
-      <h1 className="text-3xl font-bold text-center mt-4">About Us</h1>
+      <h1 className="text-3xl font-bold text-center mt-4">About Us.</h1>
 
       <h4 className="text-center text-6xl text-primary">
         {" "}
