@@ -13,7 +13,7 @@ export const ArtworkCard = ({ artwork, onOpenDrawer }: ArtworkProps) => {
   };
 
   return (
-    <div className="card w-96 h-fit bg-base-100 shadow-xl" onClick={openDrawer}>
+    <div className="card w-80 h-fit bg-base-100 shadow-xl" onClick={openDrawer}>
       <label htmlFor="my-drawer-4"></label>
       <figure>
         <img src={artwork.imageSrc} alt={artwork.title} />
