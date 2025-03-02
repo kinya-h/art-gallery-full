@@ -51,6 +51,7 @@ export const ArtworkCard = ({ artwork, onOpenDrawer }: ArtworkProps) => {
           <div className="divider w-2/3 mr-auto mt-3"></div>
         </div>
       </div>
+    
     </div>
   );
 };

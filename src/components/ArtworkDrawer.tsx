@@ -10,6 +10,7 @@ import { motion as m } from "framer-motion";
 import { purhcaseArtwork } from "../actions/purchase-service";
 import { getUser } from "../actions/userActions";
 import { useNavigate } from "react-router-dom";
+import { toast } from "react-toastify";
 
 interface artworkDrawerProps {
   isOpen: boolean;
@@ -26,6 +27,7 @@ const ArtworkDrawer = ({ isOpen, onClose, artwork }: artworkDrawerProps) => {
   const [isBuying, setIsBuying] = useState(false);
   const { user } = useSelector((state: RootState) => state.authenticatedUser);
   const { loading } = useSelector((state: RootState) => state.biddingList);
+
   useEffect(() => {
     dispatch(getUser());
     const handleOutsideClick = (event: any) => {
@@ -45,15 +47,25 @@ const ArtworkDrawer = ({ isOpen, onClose, artwork }: artworkDrawerProps) => {
     // to make it not err out
   };
 
-  const handleBidding = (e: React.FormEvent) => {
+  const handleBidding = async (e: React.FormEvent) => {
     e.preventDefault();
-    dispatch(
+    const response = await dispatch(
       bidArtwork({
         userId: (user as User).id,
         artworkId: artwork.id,
         amount: +amount,
       })
     );
+
+    if (response.type === "bid/create/fulfilled") {
+      toast.success("Bid Successful");
+      console.log("Bid Response", response.payload);
+      setTimeout(() => {
+        navigate(`/artworks/${artwork.id}/bidding`, {
+          state: { bidId: +amount },
+        });
+      }, 2000);
+    }
     setAmount("");
   };
 
@@ -69,9 +81,15 @@ const ArtworkDrawer = ({ isOpen, onClose, artwork }: artworkDrawerProps) => {
     );
     setAmount("");
 
-    if (response.type === "purchase/create/fulfilled") navigate("/purchases");
+    if (response.type === "purchase/create/fulfilled") {
+      toast.success("Buy Successful");
+      navigate("/purchases");
+    }
   };
 
+  const handleStartBiddding = () => {
+    setIsBidding(true);
+  };
   return (
     <m.div
       initial={{ opacity: 0 }}
@@ -103,7 +121,7 @@ const ArtworkDrawer = ({ isOpen, onClose, artwork }: artworkDrawerProps) => {
           <p className="m-2">{artwork?.collection?.title}</p>
 
           <div className="stats bg-primary text-primary-content ">
-            <div className="stat">
+            {/* <div className="stat">
               <h2 className="stat-title font-bold">Price</h2>
               <h2 className="font-bold text-2xl text-black">
                 ${artwork.price}
@@ -147,9 +165,9 @@ const ArtworkDrawer = ({ isOpen, onClose, artwork }: artworkDrawerProps) => {
                   Buy
                 </button>
               </div>
-            </div>
+            </div> */}
 
-            <div className="stat">
+            <div className="stat text-center">
               <h2 className="stat-title font-bold">Highest Bid</h2>
               <h2 className="font-bold text-2xl text-black">
                 ${artwork.highest_bid}
@@ -176,6 +194,7 @@ const ArtworkDrawer = ({ isOpen, onClose, artwork }: artworkDrawerProps) => {
                     <div className="flex ">
                       <div className="form-control ml-auto">
                         <button
+                          disabled={+amount < artwork.price}
                           className="btn btn-sm mt-2  btn-accent"
                           type="submit"
                         >
@@ -187,7 +206,7 @@ const ArtworkDrawer = ({ isOpen, onClose, artwork }: artworkDrawerProps) => {
                 )}
                 <button
                   className={`btn btn-sm ${isBidding && "hidden"}`}
-                  onClick={() => setIsBidding(true)}
+                  onClick={() => handleStartBiddding()}
                 >
                   Bid
                 </button>

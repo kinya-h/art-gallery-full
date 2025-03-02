@@ -10,6 +10,7 @@ import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import ArtworkDrawer from "../components/ArtworkDrawer";
 import SubNavbar from "../components/SubNavbar";
+import { MaterialSymbolsShoppingCart } from "../components/Cart";
 
 const Home = () => {
   const { artworks } = useSelector(
@@ -17,9 +18,9 @@ const Home = () => {
   );
 
   const [featuredArtworks, setFeaturedArtworks] = useState<Artwork[]>([]);
-  const { success, error } = useSelector(
-    (state: RootState) => state.biddingList
-  );
+  // const { success, error } = useSelector(
+  //   (state: RootState) => state.biddingList
+  // );
 
   const dispatch = useAppDispatch();
   let renderModal = null;
@@ -58,12 +59,12 @@ const Home = () => {
 
     fetchArt();
 
-    if (success) {
-      toast.success("Bid Successfully Placed");
-    } else if (error) {
-      toast.error("Bid Failed, try again later!");
-    }
-  }, [success]);
+    // if (success) {
+    //   toast.success("Bid Successfully Placed");
+    // } else if (error) {
+    //   toast.error("Bid Failed, try again later!");
+    // }
+  }, []);
 
   const handleShowMoreInfo = (artwork: Artwork) => {
     setOpen(true);
@@ -99,6 +100,11 @@ const Home = () => {
 
   return (
     <div className="mt-20">
+      {/* cart */}
+      <div className="fixed right-0 p-4">
+        <MaterialSymbolsShoppingCart className="text-orange-500 h-24 w-auto " />
+      </div>
+
       <ToastContainer />
       {isDrawerOpen && (
         <ArtworkDrawer

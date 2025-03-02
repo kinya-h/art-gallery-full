@@ -31,6 +31,7 @@ const reducer = combineReducers({
   artworkCollections: collectionSlice.reducer,
   purchasedArtworks: buySlice.reducer,
   allpurchasedArtworks: purchaseSlice.reducer,
+  // userBids: userBiddingSlice.reducer,
 });
 
 export const store = configureStore({

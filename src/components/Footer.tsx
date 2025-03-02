@@ -11,7 +11,7 @@ const Footer = () => {
           <p>
             VVDKH.
             <br />
-            Copyright &copy; 2024{" "}
+            Copyright &copy; {new Date ().getFullYear()}
             <span className="text-gray-500 font-semibold"> VVDKH.</span>
           </p>
         </aside>

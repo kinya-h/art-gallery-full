@@ -3,6 +3,7 @@ import { Artwork, Collection } from "../../types/artwork";
 import {
   fetchArtworks,
   fetchCollections,
+  getArtwork,
   searchArtworks,
 } from "../../actions/artwork-service";
 
@@ -47,7 +48,21 @@ export const artworkSlice = createSlice({
       .addCase(searchArtworks.rejected, (state, action) => {
         state.loading = false;
         state.error = action.payload;
-      });
+      })
+
+      .addCase(getArtwork.pending, (state)=>{
+        state.loading = true;
+        
+      })
+      .addCase(getArtwork.fulfilled, (state, action)=>{
+        state.loading = false;
+      
+        const exists = state.artworks.find((artwork) => artwork.id === +action.payload.id);  
+        if (exists) {
+          state.loading = false;
+        }
+        state.artworks.push(action.payload);
+      })  
   },
 });
 

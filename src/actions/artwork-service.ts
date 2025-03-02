@@ -61,3 +61,13 @@ export const searchArtworks = createAsyncThunk<
 
   return response.data as Artwork[];
 });
+
+
+export const getArtwork = createAsyncThunk<Artwork, number>(
+  "artwork/get",
+  async (id) => { 
+
+    const response = await axios.get(`${API_URL}/api/artworks/${id}/`);
+    return response.data as Artwork;
+  }
+);
