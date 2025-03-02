@@ -7,10 +7,10 @@ interface PayementGatewayProps {
 
 const PayementGateway = ({ onCancelPayment, amount }: PayementGatewayProps) => {
   const config = {
-    currency: "USD",
+    currency: "KES",
     reference: new Date().getTime().toString(),
     email: "vvdkh.group@gmail.com",
-    amount,
+    amount: amount * 10000,
     publicKey: "pk_test_1f7e46a3cc7f4ef52a18454d8c93a54f0bf6cd1f",
   };
   const handlePaystackSuccessAction = (reference: any) => {
